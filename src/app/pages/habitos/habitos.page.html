@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button> <!-- se quiser usar menu lateral depois -->
+    </ion-buttons>
+    <ion-title>Nome da Página</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment value="habitos" (ionChange)="navegar($event)">
+      <ion-segment-button value="habitos">
+        Hábitos
+      </ion-segment-button>
+      <ion-segment-button value="conquistas">
+        Conquistas
+      </ion-segment-button>
+      <ion-segment-button value="objetivos">
+        Objetivos
+      </ion-segment-button>
+      <ion-segment-button value="categorias">
+        Categorias
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
