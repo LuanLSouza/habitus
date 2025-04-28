@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HabitService } from '../../services/habit.service';
 import { Habit, FrequencyType, StatusType } from '../../models/habit.model';
 import { Observable } from 'rxjs';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController, AlertController, ViewWillEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-habitos',
@@ -11,22 +11,20 @@ import { ModalController, AlertController } from '@ionic/angular';
   styleUrls: ['./habitos.page.scss'],
   standalone: false
 })
-export class HabitosPage implements OnInit {
-  habits$: Observable<Habit[]>;
+export class HabitosPage implements OnInit, ViewWillEnter {
+  habits: Habit[] = [];
   FrequencyType = FrequencyType;
   StatusType = StatusType;
 
   constructor(
     private router: Router,
     private habitService: HabitService,
-    private modalController: ModalController,
     private alertController: AlertController
   ) {
-    this.habits$ = this.habitService.getHabits();
   }
 
-  trackByFn(index: number, habit: Habit): number {
-    return habit.id;
+  ionViewWillEnter() {
+    this.habits = this.habitService.getHabits();
   }
 
   navegar(event: any) {

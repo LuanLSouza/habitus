@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HabitService {
-  private habitsSubject = new BehaviorSubject<Habit[]>([
+  private listHabitos: Habit[] =([
     {
       id: 1,
       nome: 'Beber água',
@@ -43,31 +43,9 @@ export class HabitService {
 
   constructor() { }
 
-  getHabits(): Observable<Habit[]> {
-    return this.habitsSubject.asObservable();
+  getHabits(): Habit[] {
+    return [...this.listHabitos];
   }
 
-  getHabitById(id: number): Habit | undefined {
-    return this.habitsSubject.value.find(habit => habit.id === id);
-  }
 
-  addHabit(habit: Habit): void {
-    const habits = this.habitsSubject.value;
-    this.habitsSubject.next([...habits, habit]);
-  }
-
-  updateHabit(updatedHabit: Habit): void {
-    const habits = this.habitsSubject.value;
-    const index = habits.findIndex(h => h.id === updatedHabit.id);
-    
-    if (index !== -1) {
-      habits[index] = updatedHabit;
-      this.habitsSubject.next([...habits]);
-    }
-  }
-
-  deleteHabit(id: number): void {
-    const habits = this.habitsSubject.value;
-    this.habitsSubject.next(habits.filter(habit => habit.id !== id));
-  }
 } 
