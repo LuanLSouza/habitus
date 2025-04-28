@@ -1,0 +1,131 @@
+.habit-card {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  background-color: #1e1e1e;
+  border-left: 4px solid #7b1fa2;
+}
+
+.status-badge {
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: 16px;
+  margin-right: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.frequency-text {
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.date-text {
+  font-size: 0.9rem;
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+ion-card-title {
+  margin-top: 8px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #f5f5f5;
+}
+
+ion-card-content {
+  padding-top: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+ion-fab-button {
+  margin-bottom: 24px;
+  margin-right: 24px;
+  --background: #7b1fa2;
+  --color: #f5f5f5;
+  --box-shadow: 0 6px 12px rgba(123, 31, 162, 0.4);
+}
+
+ion-content {
+  --background: #121212;
+  --color: #f5f5f5;
+}
+
+ion-header ion-toolbar {
+  --background: #121212;
+  --color: #f5f5f5;
+}
+
+ion-segment {
+  --background: #121212;
+}
+
+ion-segment-button {
+  --color: rgba(255, 255, 255, 0.7);
+  --color-checked: #f5f5f5;
+  --indicator-color: #7b1fa2;
+}
+
+ion-card-header {
+  background-color: rgba(123, 31, 162, 0.1);
+}
+
+ion-item {
+  --background: #1e1e1e;
+  --color: #f5f5f5;
+}
+
+ion-button {
+  --color: rgba(255, 255, 255, 0.7);
+}
+
+// Elegant Header Styles
+.elegant-header {
+  ion-toolbar:first-child {
+    --background: linear-gradient(135deg, #121212 0%, #2d1a3c 100%);
+    --border-width: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.main-title {
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.title-underline {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, #7b1fa2, #9c4dcc);
+  margin-top: 6px;
+  border-radius: 2px;
+}
+
+.custom-segment {
+  --background: #1a1a1a;
+  border-radius: 8px;
+  margin: 0 12px;
+  
+  ion-segment-button {
+    --border-radius: 6px;
+    --margin-top: 5px;
+    --margin-bottom: 5px;
+    --color-checked: #ffffff;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+}
