@@ -66,6 +66,30 @@ export class HabitosPage implements OnInit, ViewWillEnter {
     }
   }
 
+  async confirmDeleteHabit(habit: Habit) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar exclusão',
+      message: `Tem certeza que deseja excluir o hábito "${habit.nome}"?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Excluir',
+          role: 'confirm',
+          cssClass: 'danger',
+          handler: () => {
+            this.habitService.deleteHabit(habit.id);
+            this.habits = this.habitService.getHabits();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   ngOnInit() {
     console.log('HabitosPage initialized');
   }

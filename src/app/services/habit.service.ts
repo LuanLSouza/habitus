@@ -66,4 +66,10 @@ export class HabitService {
     
     return newHabit;
   }
+
+  deleteHabit(id: number): boolean {
+    const initialLength = this.listHabitos.length;
+    this.listHabitos = this.listHabitos.filter(habit => habit.id !== id);
+    return initialLength > this.listHabitos.length;
+  }
 } 
