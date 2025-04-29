@@ -54,7 +54,7 @@
               
               <ion-item lines="none" detail="false">
                 <ion-buttons slot="end">
-                  <ion-button fill="clear">
+                  <ion-button fill="clear" (click)="openEditHabitModal(habit)">
                     <ion-icon name="create-outline" slot="icon-only"></ion-icon>
                   </ion-button>
                   <ion-button fill="clear" (click)="confirmDeleteHabit(habit)">

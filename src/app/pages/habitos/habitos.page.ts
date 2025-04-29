@@ -66,6 +66,24 @@ export class HabitosPage implements OnInit, ViewWillEnter {
     }
   }
 
+  async openEditHabitModal(habit: Habit) {
+    const modal = await this.modalController.create({
+      component: HabitModalComponent,
+      componentProps: {
+        habit: {...habit}
+      }
+    });
+    
+    await modal.present();
+    
+    const { data, role } = await modal.onWillDismiss();
+    
+    if (role === 'confirm' && data) {
+      this.habitService.updateHabit(data);
+      this.habits = this.habitService.getHabits();
+    }
+  }
+
   async confirmDeleteHabit(habit: Habit) {
     const alert = await this.alertController.create({
       header: 'Confirmar exclusão',

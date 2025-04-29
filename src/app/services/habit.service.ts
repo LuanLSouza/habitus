@@ -47,6 +47,10 @@ export class HabitService {
     return [...this.listHabitos];
   }
 
+  getHabitById(id: number): Habit | undefined {
+    return this.listHabitos.find(habit => habit.id === id);
+  }
+
   addHabit(habit: Partial<Habit>): Habit {
     // Generate a new ID (simply increment the highest existing ID)
     const newId = Math.max(...this.listHabitos.map(h => h.id), 0) + 1;
@@ -65,6 +69,17 @@ export class HabitService {
     this.listHabitos.push(newHabit);
     
     return newHabit;
+  }
+
+  updateHabit(updatedHabit: Habit): boolean {
+    const index = this.listHabitos.findIndex(h => h.id === updatedHabit.id);
+    
+    if (index !== -1) {
+      this.listHabitos[index] = {...updatedHabit};
+      return true;
+    }
+    
+    return false;
   }
 
   deleteHabit(id: number): boolean {

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Novo Hábito</ion-title>
+    <ion-title>{{ isEditMode ? 'Editar Hábito' : 'Novo Hábito' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cancel()">Cancelar</ion-button>
     </ion-buttons>
@@ -56,6 +56,17 @@
       </ion-select>
     </ion-item>
     
+    @if (isEditMode) {
+      <ion-item>
+        <ion-label position="stacked">Status</ion-label>
+        <ion-select formControlName="status">
+          @for (status of statusTypes; track status) {
+            <ion-select-option [value]="status">{{ status }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+    }
+    
     <ion-item>
       <ion-label position="stacked">Data de Início</ion-label>
       <ion-datetime-button datetime="dataInicio"></ion-datetime-button>
@@ -78,7 +89,7 @@
 <ion-footer>
   <ion-toolbar>
     <ion-button expand="block" [disabled]="habitForm.invalid" (click)="confirm()">
-      Salvar Hábito
+      {{ isEditMode ? 'Atualizar' : 'Salvar' }} Hábito
     </ion-button>
   </ion-toolbar>
 </ion-footer> 

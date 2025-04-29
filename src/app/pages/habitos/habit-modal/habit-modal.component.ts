@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Habit, FrequencyType, StatusType } from '../../../models/habit.model';
@@ -10,6 +10,9 @@ import { Habit, FrequencyType, StatusType } from '../../../models/habit.model';
   standalone: false
 })
 export class HabitModalComponent implements OnInit {
+  @Input() habit: Habit | null = null;
+  isEditMode = false;
+  
   habitForm: FormGroup = this.fb.group({
     nome: ['', [
       Validators.required, 
@@ -22,9 +25,11 @@ export class HabitModalComponent implements OnInit {
       Validators.maxLength(200)
     ]],
     frequencia: [FrequencyType.DAILY, [Validators.required]],
-    dataInicio: [new Date().toISOString(), [Validators.required]]
+    dataInicio: [new Date().toISOString(), [Validators.required]],
+    status: [StatusType.ACTIVE]
   });
   frequencyTypes = Object.values(FrequencyType);
+  statusTypes = Object.values(StatusType);
   
   constructor(
     private modalCtrl: ModalController,
@@ -32,7 +37,16 @@ export class HabitModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Form is already initialized
+    if (this.habit) {
+      this.isEditMode = true;
+      this.habitForm.patchValue({
+        nome: this.habit.nome,
+        descricao: this.habit.descricao,
+        frequencia: this.habit.frequencia,
+        dataInicio: new Date(this.habit.dataInicio).toISOString(),
+        status: this.habit.status
+      });
+    }
   }
 
   cancel() {
@@ -45,12 +59,20 @@ export class HabitModalComponent implements OnInit {
       return;
     }
     
-    const newHabit: Partial<Habit> = {
-      ...this.habitForm.value,
-      status: StatusType.ACTIVE
-    };
-    
-    return this.modalCtrl.dismiss(newHabit, 'confirm');
+    if (this.isEditMode && this.habit) {
+      // For edit mode, return the complete habit with ID
+      const updatedHabit: Habit = {
+        ...this.habitForm.value,
+        id: this.habit.id
+      };
+      return this.modalCtrl.dismiss(updatedHabit, 'confirm');
+    } else {
+      // For new habit, return without ID
+      const newHabit: Partial<Habit> = {
+        ...this.habitForm.value
+      };
+      return this.modalCtrl.dismiss(newHabit, 'confirm');
+    }
   }
 
   // Getters para facilitar o acesso aos controles do formulário no template
