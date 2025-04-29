@@ -9,22 +9,50 @@
 
 <div class="form-container">
   <form [formGroup]="habitForm">
-    <ion-item>
+    <ion-item [class.ion-invalid]="nome?.invalid && (nome?.dirty || nome?.touched)">
       <ion-label position="stacked">Nome</ion-label>
       <ion-input formControlName="nome" placeholder="Digite o nome do hábito"></ion-input>
+      
+      @if (nome?.invalid && (nome?.dirty || nome?.touched)) {
+        <div class="error-messages">
+          @if (nome?.errors?.['required']) {
+            <div class="error-message">Nome é obrigatório</div>
+          }
+          @if (nome?.errors?.['minlength']) {
+            <div class="error-message">Nome deve ter no mínimo 4 caracteres</div>
+          }
+          @if (nome?.errors?.['maxlength']) {
+            <div class="error-message">Nome não pode ter mais de 100 caracteres</div>
+          }
+        </div>
+      }
     </ion-item>
     
-    <ion-item>
+    <ion-item [class.ion-invalid]="descricao?.invalid && (descricao?.dirty || descricao?.touched)">
       <ion-label position="stacked">Descrição</ion-label>
       <ion-textarea formControlName="descricao" placeholder="Descreva seu hábito"></ion-textarea>
+      
+      @if (descricao?.invalid && (descricao?.dirty || descricao?.touched)) {
+        <div class="error-messages">
+          @if (descricao?.errors?.['required']) {
+            <div class="error-message">Descrição é obrigatória</div>
+          }
+          @if (descricao?.errors?.['minlength']) {
+            <div class="error-message">Descrição deve ter no mínimo 4 caracteres</div>
+          }
+          @if (descricao?.errors?.['maxlength']) {
+            <div class="error-message">Descrição não pode ter mais de 200 caracteres</div>
+          }
+        </div>
+      }
     </ion-item>
     
     <ion-item>
       <ion-label position="stacked">Frequência</ion-label>
       <ion-select formControlName="frequencia">
-        <ion-select-option *ngFor="let type of frequencyTypes" [value]="type">
-          {{ type }}
-        </ion-select-option>
+        @for (type of frequencyTypes; track type) {
+          <ion-select-option [value]="type">{{ type }}</ion-select-option>
+        }
       </ion-select>
     </ion-item>
     
@@ -49,7 +77,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" (click)="confirm()">
+    <ion-button expand="block" [disabled]="habitForm.invalid" (click)="confirm()">
       Salvar Hábito
     </ion-button>
   </ion-toolbar>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Habit, FrequencyType, StatusType } from '../../../models/habit.model';
 
 @Component({
@@ -11,10 +11,18 @@ import { Habit, FrequencyType, StatusType } from '../../../models/habit.model';
 })
 export class HabitModalComponent implements OnInit {
   habitForm: FormGroup = this.fb.group({
-    nome: [''],
-    descricao: [''],
-    frequencia: [FrequencyType.DAILY],
-    dataInicio: [new Date().toISOString()]
+    nome: ['', [
+      Validators.required, 
+      Validators.minLength(4), 
+      Validators.maxLength(100)
+    ]],
+    descricao: ['', [
+      Validators.required, 
+      Validators.minLength(4), 
+      Validators.maxLength(200)
+    ]],
+    frequencia: [FrequencyType.DAILY, [Validators.required]],
+    dataInicio: [new Date().toISOString(), [Validators.required]]
   });
   frequencyTypes = Object.values(FrequencyType);
   
@@ -32,6 +40,11 @@ export class HabitModalComponent implements OnInit {
   }
 
   confirm() {
+    if (this.habitForm.invalid) {
+      this.habitForm.markAllAsTouched();
+      return;
+    }
+    
     const newHabit: Partial<Habit> = {
       ...this.habitForm.value,
       status: StatusType.ACTIVE
@@ -39,4 +52,8 @@ export class HabitModalComponent implements OnInit {
     
     return this.modalCtrl.dismiss(newHabit, 'confirm');
   }
+
+  // Getters para facilitar o acesso aos controles do formulário no template
+  get nome() { return this.habitForm.get('nome'); }
+  get descricao() { return this.habitForm.get('descricao'); }
 } 
