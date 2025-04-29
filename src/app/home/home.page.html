@@ -1,21 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title class="title">
-      Bem-vindo ao Habitus
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-
-<ion-content [fullscreen]="true" class="ion-padding">
-
-  <div class="container">
-    <p class="subtitle">Construa hábitos. Transforme sua vida.</p>
-
-    <ion-button expand="block" class="button-start" routerLink="/habitos">
-      Começar Jornada
-    </ion-button>
-
+<ion-content [fullscreen]="true">
+  <div class="overlay"></div>
+  <div class="hero-container">
+    <div class="logo-container">
+      <ion-icon name="leaf-outline" class="logo-icon"></ion-icon>
+      <h1 class="app-name">Habitus</h1>
+    </div>
+    
+    <div class="content-container">
+      <h2 class="main-title">Transforme seus <span class="highlight">hábitos</span>,<br>transforme sua <span class="highlight">vida</span></h2>
+      
+      <p class="subtitle">
+        Desenvolva hábitos positivos, acompanhe seu progresso e alcance seus objetivos com uma abordagem simples e eficaz.
+      </p>
+      
+      <ion-button expand="block" class="start-button" routerLink="/habitos">
+        <ion-icon name="arrow-forward-circle-outline" slot="end"></ion-icon>
+        Começar Jornada
+      </ion-button>
+      
+      <div class="features">
+        <div class="feature-item">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <span>Crie hábitos</span>
+        </div>
+        <div class="feature-item">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>Acompanhe progresso</span>
+        </div>
+        <div class="feature-item">
+          <ion-icon name="trophy-outline"></ion-icon>
+          <span>Conquiste objetivos</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>Comece sua transformação hoje</p>
+    </div>
   </div>
-
 </ion-content>
