@@ -47,5 +47,23 @@ export class HabitService {
     return [...this.listHabitos];
   }
 
-
+  addHabit(habit: Partial<Habit>): Habit {
+    // Generate a new ID (simply increment the highest existing ID)
+    const newId = Math.max(...this.listHabitos.map(h => h.id), 0) + 1;
+    
+    // Create the complete habit object
+    const newHabit: Habit = {
+      id: newId,
+      nome: habit.nome || '',
+      descricao: habit.descricao || '',
+      frequencia: habit.frequencia || FrequencyType.DAILY,
+      dataInicio: habit.dataInicio ? new Date(habit.dataInicio) : new Date(),
+      status: habit.status || StatusType.ACTIVE
+    };
+    
+    // Add to our list
+    this.listHabitos.push(newHabit);
+    
+    return newHabit;
+  }
 } 

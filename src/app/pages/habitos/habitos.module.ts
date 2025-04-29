@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { HabitosPageRoutingModule } from './habitos-routing.module';
 
 import { HabitosPage } from './habitos.page';
+import { HabitModalComponent } from './habit-modal/habit-modal.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { HabitosPage } from './habitos.page';
   ],
   declarations: [
     HabitosPage,
+    HabitModalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

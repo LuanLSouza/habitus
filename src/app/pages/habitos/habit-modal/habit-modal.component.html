@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Novo Hábito</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="form-container">
+  <form [formGroup]="habitForm">
+    <ion-item>
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input formControlName="nome" placeholder="Digite o nome do hábito"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-textarea formControlName="descricao" placeholder="Descreva seu hábito"></ion-textarea>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Frequência</ion-label>
+      <ion-select formControlName="frequencia">
+        <ion-select-option *ngFor="let type of frequencyTypes" [value]="type">
+          {{ type }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Data de Início</ion-label>
+      <ion-datetime-button datetime="dataInicio"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime 
+            id="dataInicio" 
+            presentation="date"
+            formControlName="dataInicio"
+            [showDefaultButtons]="true"
+            cancelText="Cancelar"
+            doneText="Confirmar"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+  </form>
+</div>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="confirm()">
+      Salvar Hábito
+    </ion-button>
+  </ion-toolbar>
+</ion-footer> 

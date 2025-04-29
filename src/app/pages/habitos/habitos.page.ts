@@ -4,6 +4,7 @@ import { HabitService } from '../../services/habit.service';
 import { Habit, FrequencyType, StatusType } from '../../models/habit.model';
 import { Observable } from 'rxjs';
 import { ModalController, AlertController, ViewWillEnter } from '@ionic/angular';
+import { HabitModalComponent } from './habit-modal/habit-modal.component';
 
 @Component({
   selector: 'app-habitos',
@@ -19,7 +20,8 @@ export class HabitosPage implements OnInit, ViewWillEnter {
   constructor(
     private router: Router,
     private habitService: HabitService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private modalController: ModalController
   ) {
   }
 
@@ -50,12 +52,18 @@ export class HabitosPage implements OnInit, ViewWillEnter {
   }
 
   async openAddHabitModal() {
-    const alert = await this.alertController.create({
-      header: 'Adicionar Hábito',
-      message: 'Funcionalidade em desenvolvimento',
-      buttons: ['OK']
+    const modal = await this.modalController.create({
+      component: HabitModalComponent
     });
-    await alert.present();
+    
+    await modal.present();
+    
+    const { data, role } = await modal.onWillDismiss();
+    
+    if (role === 'confirm' && data) {
+      const newHabit = this.habitService.addHabit(data);
+      this.habits = this.habitService.getHabits();
+    }
   }
 
   ngOnInit() {
