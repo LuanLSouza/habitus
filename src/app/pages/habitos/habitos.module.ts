@@ -8,6 +8,7 @@ import { HabitosPageRoutingModule } from './habitos-routing.module';
 
 import { HabitosPage } from './habitos.page';
 import { HabitModalComponent } from './habit-modal/habit-modal.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { HabitModalComponent } from './habit-modal/habit-modal.component';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    HabitosPageRoutingModule
+    HabitosPageRoutingModule,
+    HttpClientModule
   ],
   declarations: [
     HabitosPage,

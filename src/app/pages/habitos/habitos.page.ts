@@ -26,7 +26,17 @@ export class HabitosPage implements OnInit, ViewWillEnter {
   }
 
   ionViewWillEnter() {
-    this.habits = this.habitService.getHabits();
+    this.habitService.getHabitos().subscribe(
+      {
+        next: (response) => {
+          this.habits = response;
+        },
+        error: (error) => {
+          alert('Erro ao carregar os hábitos:');
+          console.error(error);
+        }
+      }
+    );
   }
 
   navegar(event: any) {
@@ -62,7 +72,7 @@ export class HabitosPage implements OnInit, ViewWillEnter {
     
     if (role === 'confirm' && data) {
       const newHabit = this.habitService.addHabit(data);
-      this.habits = this.habitService.getHabits();
+      //this.habits = this.habitService.getHabits();
     }
   }
 
@@ -80,7 +90,7 @@ export class HabitosPage implements OnInit, ViewWillEnter {
     
     if (role === 'confirm' && data) {
       this.habitService.updateHabit(data);
-      this.habits = this.habitService.getHabits();
+      //this.habits = this.habitService.getHabits();
     }
   }
 
@@ -99,7 +109,7 @@ export class HabitosPage implements OnInit, ViewWillEnter {
           cssClass: 'danger',
           handler: () => {
             this.habitService.deleteHabit(habit.id);
-            this.habits = this.habitService.getHabits();
+            //this.habits = this.habitService.getHabits();
           }
         }
       ]
