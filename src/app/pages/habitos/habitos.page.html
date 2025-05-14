@@ -34,33 +34,33 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12">
-          @for (habit of habits; track habit.id) {
+          @for (habito of habitos; track habito.id) {
             <ion-card class="habit-card">
               <ion-card-header>
                 <ion-card-subtitle>
-                  <ion-badge [color]="getStatusColor(habit.status)" class="status-badge">
-                    {{ habit.status }}
+                  <ion-badge [color]="getStatusColor(habito.status)" class="status-badge">
+                    {{ habito.status }}
                   </ion-badge>
                   <ion-text color="medium" class="frequency-text">
-                    {{ habit.frequencia }}
+                    {{ habito.frequencia }}
                   </ion-text>
                 </ion-card-subtitle>
-                <ion-card-title>{{ habit.nome }}</ion-card-title>
+                <ion-card-title>{{ habito.nome }}</ion-card-title>
               </ion-card-header>
               
               <ion-card-content>
-                <p>{{ habit.descricao }}</p>
+                <p>{{ habito.descricao }}</p>
                 <ion-text color="medium" class="date-text">
-                  <p>Início: {{ formatDate(habit.dataInicio) }}</p>
+                  <p>Início: {{ habito.dataInicio | date: 'dd/MM/yyyy' }}</p>
                 </ion-text>
               </ion-card-content>
               
               <ion-item lines="none" detail="false">
                 <ion-buttons slot="end">
-                  <ion-button fill="clear" (click)="openEditHabitModal(habit)">
+                  <ion-button fill="clear" (click)="openEditHabitModal(habito)">
                     <ion-icon name="create-outline" slot="icon-only"></ion-icon>
                   </ion-button>
-                  <ion-button fill="clear" (click)="confirmDeleteHabit(habit)">
+                  <ion-button fill="clear" (click)="confirmDeleteHabit(habito)">
                     <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
                   </ion-button>
                 </ion-buttons>
@@ -68,7 +68,7 @@
             </ion-card>
           }
           
-          @if (habits.length === 0) {
+          @if (habitos.length === 0) {
             <ion-card>
               <ion-card-content>
                 <p class="ion-text-center">Nenhum hábito encontrado.</p>

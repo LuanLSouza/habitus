@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Habit, FrequencyType, StatusType } from '../../../models/habit.model';
+import { Habito, FrequencyType, StatusType } from '../../../models/habito.model';
 
 @Component({
   selector: 'app-habit-modal',
@@ -10,7 +10,7 @@ import { Habit, FrequencyType, StatusType } from '../../../models/habit.model';
   standalone: false
 })
 export class HabitModalComponent implements OnInit {
-  @Input() habit: Habit | null = null;
+  @Input() habit: Habito | null = null;
   isEditMode = false;
   
   habitForm: FormGroup = this.fb.group({
@@ -60,15 +60,13 @@ export class HabitModalComponent implements OnInit {
     }
     
     if (this.isEditMode && this.habit) {
-      // For edit mode, return the complete habit with ID
-      const updatedHabit: Habit = {
+      const updatedHabit: Habito = {
         ...this.habitForm.value,
         id: this.habit.id
       };
       return this.modalCtrl.dismiss(updatedHabit, 'confirm');
     } else {
-      // For new habit, return without ID
-      const newHabit: Partial<Habit> = {
+      const newHabit = {
         ...this.habitForm.value
       };
       return this.modalCtrl.dismiss(newHabit, 'confirm');

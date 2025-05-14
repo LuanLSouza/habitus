@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HabitService } from '../../services/habit.service';
-import { Habit, FrequencyType, StatusType } from '../../models/habit.model';
+import { Habito, FrequencyType, StatusType } from '../../models/habito.model';
 import { Observable } from 'rxjs';
 import { ModalController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { HabitModalComponent } from './habit-modal/habit-modal.component';
@@ -13,7 +13,7 @@ import { HabitModalComponent } from './habit-modal/habit-modal.component';
   standalone: false
 })
 export class HabitosPage implements OnInit, ViewWillEnter {
-  habits: Habit[] = [];
+  habitos: Habito[] = [];
   FrequencyType = FrequencyType;
   StatusType = StatusType;
 
@@ -29,7 +29,7 @@ export class HabitosPage implements OnInit, ViewWillEnter {
     this.habitService.getHabitos().subscribe(
       {
         next: (response) => {
-          this.habits = response;
+          this.habitos = response;
         },
         error: (error) => {
           alert('Erro ao carregar os hábitos:');
@@ -57,66 +57,75 @@ export class HabitosPage implements OnInit, ViewWillEnter {
     }
   }
 
-  formatDate(date: Date): string {
-    return new Date(date).toLocaleDateString('pt-BR');
-  }
-
   async openAddHabitModal() {
     const modal = await this.modalController.create({
-      component: HabitModalComponent
+        component: HabitModalComponent
     });
-    
-    await modal.present();
-    
-    const { data, role } = await modal.onWillDismiss();
-    
-    if (role === 'confirm' && data) {
-      const newHabit = this.habitService.addHabit(data);
-      //this.habits = this.habitService.getHabits();
-    }
-  }
 
-  async openEditHabitModal(habit: Habit) {
-    const modal = await this.modalController.create({
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm' && data) {
+        this.habitService.save(data).subscribe({
+            next: () => this.atualizarHabitos(),
+            error: (err) => console.error('Erro ao salvar hábito:', err)
+        });
+    }
+}
+
+async openEditHabitModal(habit: Habito) {
+  const modal = await this.modalController.create({
       component: HabitModalComponent,
       componentProps: {
-        habit: {...habit}
+          habit: {...habit}
       }
-    });
-    
-    await modal.present();
-    
-    const { data, role } = await modal.onWillDismiss();
-    
-    if (role === 'confirm' && data) {
-      this.habitService.updateHabit(data);
-      //this.habits = this.habitService.getHabits();
-    }
-  }
+  });
 
-  async confirmDeleteHabit(habit: Habit) {
-    const alert = await this.alertController.create({
+  await modal.present();
+
+  const { data, role } = await modal.onWillDismiss();
+
+  if (role === 'confirm' && data) {
+      this.habitService.save(data).subscribe({
+          next: () => this.atualizarHabitos(),
+          error: (err) => console.error('Erro ao atualizar hábito:', err)
+      });
+  }
+}
+
+async confirmDeleteHabit(habito: Habito) {
+  const alert = await this.alertController.create({
       header: 'Confirmar exclusão',
-      message: `Tem certeza que deseja excluir o hábito "${habit.nome}"?`,
+      message: `Tem certeza que deseja excluir o hábito "${habito.nome}"?`,
       buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel'
-        },
-        {
-          text: 'Excluir',
-          role: 'confirm',
-          cssClass: 'danger',
-          handler: () => {
-            this.habitService.deleteHabit(habit.id);
-            //this.habits = this.habitService.getHabits();
+          {
+              text: 'Cancelar',
+              role: 'cancel'
+          },
+          {
+              text: 'Excluir',
+              role: 'confirm',
+              cssClass: 'danger',
+              handler: () => {
+                  this.habitService.deleteHabit(habito).subscribe({
+                      next: () => this.atualizarHabitos(),
+                      error: (err) => console.error('Erro ao excluir hábito:', err)
+                  });
+              }
           }
-        }
       ]
-    });
+  });
 
-    await alert.present();
-  }
+  await alert.present();
+}
+
+  atualizarHabitos() {
+    this.habitService.getHabitos().subscribe({
+        next: (habitos) => this.habitos = habitos,
+        error: (error) => console.error('Erro ao carregar os hábitos:', error)
+    });
+}
 
   ngOnInit() {
     console.log('HabitosPage initialized');

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Habit, FrequencyType, StatusType } from '../models/habit.model';
+import { Habito, FrequencyType, StatusType } from '../models/habito.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,50 +7,31 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class HabitService {
-  private listHabitos: Habit[] = [];
 
-  private readonly API_URL = 'http://localhost:3000/habits';
+  private readonly API_URL = 'http://localhost:3000/habitos';
   constructor(private http: HttpClient) { }
 
   getHabitos() {
-    return this.http.get<Habit[]>(this.API_URL)
+    return this.http.get<Habito[]>(this.API_URL)
   }
 
-  getHabitById(id: number): Habit | undefined {
-    return this.listHabitos.find(habit => habit.id === id);
+  getById(id: number) {
+    return this.http.get<Habito>(`${this.API_URL}/${id}`)
   }
 
-  addHabit(habit: Partial<Habit>): Habit {
-    const newId = Math.max(...this.listHabitos.map(h => h.id), 0) + 1;
-    
-    const newHabit: Habit = {
-      id: newId,
-      nome: habit.nome || '',
-      descricao: habit.descricao || '',
-      frequencia: habit.frequencia || FrequencyType.DAILY,
-      dataInicio: habit.dataInicio ? new Date(habit.dataInicio) : new Date(),
-      status: habit.status || StatusType.ACTIVE
-    };
-    
-    this.listHabitos.push(newHabit);
-    
-    return newHabit;
+  private add(habito: Habito) {
+    return this.http.post<Habito>(this.API_URL, habito);
   }
 
-  updateHabit(updatedHabit: Habit): boolean {
-    const index = this.listHabitos.findIndex(h => h.id === updatedHabit.id);
-    
-    if (index !== -1) {
-      this.listHabitos[index] = {...updatedHabit};
-      return true;
-    }
-    
-    return false;
+  private update(habito: Habito) {
+    return this.http.put<Habito>(`${this.API_URL}/${habito.id}`, habito);
   }
 
-  deleteHabit(id: number): boolean {
-    const initialLength = this.listHabitos.length;
-    this.listHabitos = this.listHabitos.filter(habit => habit.id !== id);
-    return initialLength > this.listHabitos.length;
+  save(habito: Habito) {
+    return habito.id ? this.update(habito) : this.add(habito);
+  }
+
+  deleteHabit(habito: Habito) {
+    return this.http.delete<Habito>(`${this.API_URL}/${habito.id}`);
   }
 } 

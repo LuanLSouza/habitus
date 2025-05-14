@@ -1,44 +1,36 @@
 {
   "habitos": [
     {
-      "id": "8819",
-      "nome": "Fazer tarefa",
-      "descricao": "Descricao2",
-      "frequencia": "WEEKLY",
-      "dataInicio": "2025-05-01",
-      "status": "ACTIVE"
-    },
-    {
       "id": "1bc9",
       "nome": "Beber água",
       "descricao": "Beber 2L de água por dia",
-      "frequencia": "DAILY",
+      "frequencia": "diario",
       "dataInicio": "2025-05-01",
-      "status": "ACTIVE"
+      "status": "ativo"
     },
     {
       "id": "ebfa",
       "nome": "Meditar",
       "descricao": "Meditar por 15 minutos",
-      "frequencia": "DAILY",
+      "frequencia": "diario",
       "dataInicio": "2025-05-01",
-      "status": "ACTIVE"
+      "status": "ativo"
     },
     {
       "id": "c5e3",
       "nome": "Ler livro",
       "descricao": "Ler pelo menos 30 páginas",
-      "frequencia": "WEEKLY",
+      "frequencia": "semanal",
       "dataInicio": "2025-05-01",
-      "status": "PAUSED"
+      "status": "pausado"
     },
     {
       "id": "7573",
       "nome": "Fazer revisão mensal",
       "descricao": "Revisar objetivos e metas",
-      "frequencia": "WEEKLY",
+      "frequencia": "semanal",
       "dataInicio": "2025-05-01",
-      "status": "MONTHLY"
+      "status": "concluido"
     }
   ]
 }

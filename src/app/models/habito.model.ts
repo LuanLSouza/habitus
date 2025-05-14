@@ -10,11 +10,11 @@ export enum StatusType {
   PAUSED = 'pausado'
 }
 
-export interface Habit {
-  id: number;
-  nome: string;
-  descricao: string;
-  frequencia: FrequencyType;
-  dataInicio: Date;
-  status: StatusType;
+export type Habito = {
+  id?: number,
+  nome: string,
+  descricao: string,
+  frequencia: FrequencyType,
+  dataInicio: Date | string,
+  status: StatusType,
 } 
