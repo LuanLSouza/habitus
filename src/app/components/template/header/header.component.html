@@ -1,0 +1,28 @@
+<ion-header class="elegant-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <div class="title-container">
+      <h1 class="main-title">Hábitos</h1>
+      <div class="title-underline"></div>
+    </div>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment value="paginaAtual">
+      <ion-segment-button [routerLink]="'/habitos'" routerLinkActive="segment-button-checked" value="habitos">
+        Hábitos
+      </ion-segment-button>
+      <ion-segment-button [routerLink]="'/conquistas'" routerLinkActive="segment-button-checked" value="conquistas">
+        Conquistas
+      </ion-segment-button>
+      <ion-segment-button [routerLink]="'/objetivos'" routerLinkActive="segment-button-checked" value="objetivos">
+        Objetivos
+      </ion-segment-button>
+      <ion-segment-button [routerLink]="'/categorias'" routerLinkActive="segment-button-checked" value="categorias">
+        Categorias
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>

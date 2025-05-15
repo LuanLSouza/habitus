@@ -15,6 +15,11 @@ const routes: Routes = [
     path: 'habitos',
     loadChildren: () => import('./pages/habitos/habitos.module').then( m => m.HabitosPageModule)
   },
+  {
+    path: 'conquistas',
+    loadChildren: () => import('./pages/conquistas/conquistas.module').then( m => m.ConquistasPageModule)
+  },
+
 ];
 
 @NgModule({

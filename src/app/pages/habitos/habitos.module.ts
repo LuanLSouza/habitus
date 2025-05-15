@@ -9,6 +9,7 @@ import { HabitosPageRoutingModule } from './habitos-routing.module';
 import { HabitosPage } from './habitos.page';
 import { HabitModalComponent } from './habit-modal/habit-modal.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderModule } from 'src/app/components/template/header/header.module';
 
 @NgModule({
   imports: [
@@ -17,11 +18,14 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     IonicModule,
     HabitosPageRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    HeaderModule
   ],
   declarations: [
     HabitosPage,
-    HabitModalComponent
+    HabitModalComponent,
+    
+    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -18,7 +18,6 @@ export class HabitosPage implements OnInit, ViewWillEnter {
   StatusType = StatusType;
 
   constructor(
-    private router: Router,
     private habitService: HabitService,
     private alertController: AlertController,
     private modalController: ModalController
@@ -37,11 +36,6 @@ export class HabitosPage implements OnInit, ViewWillEnter {
         }
       }
     );
-  }
-
-  navegar(event: any) {
-    const valor = event.detail.value;
-    this.router.navigate(['/' + valor]);
   }
 
   getStatusColor(status: StatusType): string {
