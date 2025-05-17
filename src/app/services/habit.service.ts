@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Habito, FrequencyType, StatusType } from '../models/habito.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Habito } from '../models/habito.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

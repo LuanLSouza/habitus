@@ -32,5 +32,29 @@
       "dataInicio": "2025-05-01",
       "status": "concluido"
     }
+  ],
+  "conquistas": [
+    {
+      "id": "1a9b",
+      "descricao": "Complete 7 dias seguidos do hábito de beber 2L de água",
+      "dataConquista": "2025-05-14",
+      "status": true,
+      "habitos": [
+        {
+          "id": "7573",
+          "nome": "Beber 2L de Água",
+          "frequencia": "Diário",
+          "dataInicio": "2025-05-01",
+          "status": "concluido"
+        },
+        {
+          "id": "7573",
+          "nome": "Exercitar-se",
+          "frequencia": "Semanal",
+          "dataInicio": "2025-05-07",
+          "status": "concluido"
+        }
+      ]
+    }
   ]
 }
