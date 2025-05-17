@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ViewWillEnter } from '@ionic/angular';
+import { AlertController, ModalController, ViewWillEnter } from '@ionic/angular';
 import { Conquista } from 'src/app/models/conquista.model';
 import { ConquistaService } from 'src/app/services/conquista.service';
+import { ConquistaModalComponent } from './conquista-modal/conquista-modal.component';
 
 @Component({
   selector: 'app-conquistas',
@@ -14,6 +15,7 @@ export class ConquistasPage implements OnInit, ViewWillEnter {
   constructor(
     private conquistaService: ConquistaService,
     private alertController: AlertController,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -31,6 +33,14 @@ export class ConquistasPage implements OnInit, ViewWillEnter {
         }
       }
     );
+  }
+
+  async openAddConquistaModal() {
+    const modal = await this.modalController.create({
+      component: ConquistaModalComponent
+    });
+
+    await modal.present();
   }
 
   async confirmDeleteConquista(conquista: Conquista) {
