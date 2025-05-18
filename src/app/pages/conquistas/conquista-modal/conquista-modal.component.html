@@ -1,8 +1,67 @@
-<p>
-  conquista-modal works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEditMode ? 'Editar Conquista' : 'Nova Conquista' }}</ion-title> 
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <div class="form-container">
   <form [formGroup]="conquistaForm">
-    
+    <ion-item>
+      <ion-select formControlName="habitos" [compareWith]="compareWith" label="Habitos relacionados" label-placement="floating" multiple="true">
+        @for (habito of habitos; track habito.id) {
+          <ion-select-option [value]="habito">{{ habito.nome }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item [class.ion-invalid]="descricao?.invalid &&(descricao?.dirty || descricao?.touched)">
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-input formControlName="descricao" placeholder="Descreva sua conquista"></ion-input>
+      @if (descricao?.invalid && (descricao?.dirty || descricao?.touched)) {
+        <div class="error-messages">
+          @if (descricao?.errors?.['required']) {
+            <div class="error-message">Descrição é obrigatória</div>
+          }
+          @if (descricao?.errors?.['minlength']) {
+            <div class="error-message">Descrição deve ter no mínimo 4 caracteres</div>
+          }
+          @if (descricao?.errors?.['maxlength']) {
+            <div class="error-message">Descrição não pode ter mais de 200 caracteres</div>
+          }
+        </div>
+      }
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Data da conquista</ion-label>
+      <ion-datetime-button datetime="dataConquista"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime 
+            id="dataConquista" 
+            presentation="date"
+            formControlName="dataConquista"
+            [showDefaultButtons]="true"
+            cancelText="Cancelar"
+            doneText="Confirmar"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Conquista concluída?</ion-label>
+      <ion-toggle [checked]="true" formControlName="status"></ion-toggle>
+    </ion-item>
   </form>
 </div>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" [disabled]="conquistaForm.invalid" (click)="confirm()">
+      {{ isEditMode ? 'Atualizar' : 'Salvar' }} Conquista
+    </ion-button>
+  </ion-toolbar>
+</ion-footer> 

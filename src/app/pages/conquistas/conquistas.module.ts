@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -8,6 +8,7 @@ import { ConquistasPageRoutingModule } from './conquistas-routing.module';
 
 import { ConquistasPage } from './conquistas.page';
 import { HeaderModule } from 'src/app/components/template/header/header.module';
+import { ConquistaModalComponent } from './conquista-modal/conquista-modal.component';
 
 @NgModule({
   imports: [
@@ -16,8 +17,8 @@ import { HeaderModule } from 'src/app/components/template/header/header.module';
     IonicModule,
     ConquistasPageRoutingModule,
     HeaderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  declarations: [ConquistasPage]
+  declarations: [ConquistasPage, ConquistaModalComponent]
 })
 export class ConquistasPageModule {}

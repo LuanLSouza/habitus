@@ -41,6 +41,35 @@ export class ConquistasPage implements OnInit, ViewWillEnter {
     });
 
     await modal.present();
+
+    const { data, role} = await modal.onWillDismiss();
+
+    if (role === 'confirm' && data) {
+      this.conquistaService.save(data).subscribe({
+        next: () => this.atualizarConquistas(),
+        error: (err) => console.error('Erro ao salvar conquista:', err)
+      });
+    }
+  }
+
+  async openEditHabitModal(conquista: Conquista) {
+    const modal = await this.modalController.create({
+        component: ConquistaModalComponent,
+        componentProps: {
+            conquista: {...conquista}
+        }
+    });
+  
+    await modal.present();
+  
+    const { data, role } = await modal.onWillDismiss();
+  
+    if (role === 'confirm' && data) {
+        this.conquistaService.save(data).subscribe({
+            next: () => this.atualizarConquistas(),
+            error: (err) => console.error('Erro ao atualizar conquista:', err)
+        });
+    }
   }
 
   async confirmDeleteConquista(conquista: Conquista) {

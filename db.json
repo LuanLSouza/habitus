@@ -35,26 +35,52 @@
   ],
   "conquistas": [
     {
-      "id": "1a9b",
-      "descricao": "Complete 7 dias seguidos do hábito de beber 2L de água",
-      "dataConquista": "2025-05-14",
-      "status": true,
       "habitos": [
         {
-          "id": "7573",
-          "nome": "Beber 2L de Água",
-          "frequencia": "Diário",
+          "id": "1bc9",
+          "nome": "Beber água",
+          "descricao": "Beber 2L de água por dia",
+          "frequencia": "diario",
           "dataInicio": "2025-05-01",
-          "status": "concluido"
+          "status": "ativo"
         },
         {
-          "id": "7573",
-          "nome": "Exercitar-se",
-          "frequencia": "Semanal",
-          "dataInicio": "2025-05-07",
-          "status": "concluido"
+          "id": "ebfa",
+          "nome": "Meditar",
+          "descricao": "Meditar por 15 minutos",
+          "frequencia": "diario",
+          "dataInicio": "2025-05-01",
+          "status": "ativo"
         }
-      ]
+      ],
+      "descricao": "Complete 7 dias seguidos do hábito de beber 2L de água",
+      "dataConquista": "2025-05-14T00:00:00.000Z",
+      "status": true,
+      "id": "1a9b"
+    },
+    {
+      "id": "5ee4",
+      "habitos": [
+        {
+          "id": "1bc9",
+          "nome": "Beber água",
+          "descricao": "Beber 2L de água por dia",
+          "frequencia": "diario",
+          "dataInicio": "2025-05-01",
+          "status": "ativo"
+        },
+        {
+          "id": "ebfa",
+          "nome": "Meditar",
+          "descricao": "Meditar por 15 minutos",
+          "frequencia": "diario",
+          "dataInicio": "2025-05-01",
+          "status": "ativo"
+        }
+      ],
+      "descricao": "Testando",
+      "dataConquista": "2025-05-18T14:52:24.626Z",
+      "status": true
     }
   ]
 }
