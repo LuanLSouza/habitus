@@ -1,0 +1,17 @@
+<app-header></app-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        @for (objetivo of objetivos; track objetivo.id) {
+          <ion-card class="objetivo-card">
+            <ion-card-header>
+              <ion-card-title>{{ objetivo.titulo }}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+        }
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

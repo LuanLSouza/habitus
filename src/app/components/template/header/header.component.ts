@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
-import { NavigationService } from 'src/app/services/navigation.service';
 
 @Component({
   selector: 'app-header',
