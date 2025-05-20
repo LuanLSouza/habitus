@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEditMode ? 'Editar Categoria' : 'Nova Categoria' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="form-container">
+  <form [formGroup]="categoriaForm">
+    <ion-item [class.ion-invalid]="nome?.invalid && (nome?.dirty || nome?.touched)">
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input formControlName="nome" placeholder="Digite o nome da categoria"></ion-input>
+      
+      @if (nome?.invalid && (nome?.dirty || nome?.touched)) {
+        <div class="error-messages">
+          @if (nome?.errors?.['required']) {
+            <div class="error-message">Nome é obrigatório</div>
+          }
+          @if (nome?.errors?.['minlength']) {
+            <div class="error-message">Nome deve ter no mínimo 4 caracteres</div>
+          }
+          @if (nome?.errors?.['maxlength']) {
+            <div class="error-message">Nome não pode ter mais de 100 caracteres</div>
+          }
+        </div>
+      }
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Cor</ion-label>
+      <ion-input type="color" formControlName="cor"></ion-input>
+    </ion-item>
+    
+    <ion-item [class.ion-invalid]="descricao?.invalid && (descricao?.dirty || descricao?.touched)">
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-textarea formControlName="descricao" placeholder="Descreva a categoria"></ion-textarea>
+      
+      @if (descricao?.invalid && (descricao?.dirty || descricao?.touched)) {
+        <div class="error-messages">
+          @if (descricao?.errors?.['required']) {
+            <div class="error-message">Descrição é obrigatória</div>
+          }
+          @if (descricao?.errors?.['minlength']) {
+            <div class="error-message">Descrição deve ter no mínimo 4 caracteres</div>
+          }
+          @if (descricao?.errors?.['maxlength']) {
+            <div class="error-message">Descrição não pode ter mais de 200 caracteres</div>
+          }
+        </div>
+      }
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Prioridade</ion-label>
+      <ion-select formControlName="prioridade">
+        @for (type of prioridadeTypes; track type) {
+          <ion-select-option [value]="type">{{ type }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Status</ion-label>
+      <ion-select formControlName="status">
+        @for (status of statusTypes; track status) {
+          <ion-select-option [value]="status">{{ status }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+  </form>
+</div>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" [disabled]="categoriaForm.invalid" (click)="confirm()">
+      {{ isEditMode ? 'Atualizar' : 'Salvar' }} Categoria
+    </ion-button>
+  </ion-toolbar>
+</ion-footer> 

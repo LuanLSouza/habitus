@@ -18,12 +18,15 @@ const routes: Routes = [
   {
     path: 'conquistas',
     loadChildren: () => import('./pages/conquistas/conquistas.module').then( m => m.ConquistasPageModule)
-  },  {
+  },
+  {
     path: 'objetivos',
     loadChildren: () => import('./pages/objetivos/objetivos.module').then( m => m.ObjetivosPageModule)
   },
-
-
+  {
+    path: 'categorias',
+    loadChildren: () => import('./pages/categorias/categorias.module').then( m => m.CategoriasPageModule)
+  }
 ];
 
 @NgModule({
