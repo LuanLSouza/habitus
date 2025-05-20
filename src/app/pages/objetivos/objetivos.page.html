@@ -8,10 +8,49 @@
           <ion-card class="objetivo-card">
             <ion-card-header>
               <ion-card-title>{{ objetivo.titulo }}</ion-card-title>
+              <ion-range min="0" max="100" [value]="objetivo.progresso" disabled>
+                <ion-label slot="start">0%</ion-label>
+                <ion-label slot="end">{{ objetivo.progresso }}%</ion-label>
+              </ion-range>
             </ion-card-header>
+
+            <ion-card-content>
+              <p class="descricao">
+                Descrição:{{ objetivo.descricao }} <br>
+                Prazo: {{ objetivo.dataInicio | date : 'dd/MM/yyyy'}} - {{ objetivo.prazoConclusao | date : 'dd/MM/yyyy'}}
+              </p>
+            </ion-card-content>
+
+            <ion-item>
+              <ion-buttons slot="end">
+                <ion-button fill="clear">
+                  <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" (click)="confirmDeleteObjetivo(objetivo)">
+                  <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+          </ion-card>
+        }
+
+        @if (objetivos.length === 0) {
+
+          <ion-card>
+            <ion-card-content>
+              <p class="ion-text-center">
+                Nenhum objetivo encontrado.
+              </p>
+            </ion-card-content>
           </ion-card>
         }
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

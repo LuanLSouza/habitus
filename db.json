@@ -83,14 +83,5 @@
       "status": true
     }
   ],
-  "objetivos": [
-    {
-      "id": "e418",
-      "titulo": "Teste",
-      "descricao": "Teste",
-      "dataInicio": "2025-05-18",
-      "prazoConclusao": "2025-05-25",
-      "progresso": 16
-    }
-  ]
+  "objetivos": []
 }

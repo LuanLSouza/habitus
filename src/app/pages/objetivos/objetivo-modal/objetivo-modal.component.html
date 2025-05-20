@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEditMode ? 'Editar Objetivo' : 'Novo Objetivo' }}
+
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div class="form-container">
+  <form [formGroup]="objetivoForm">
+    <ion-item [class.ion-invalid]="titulo?.invalid && (titulo?.dirty || titulo?.touched)">
+      <ion-label position="stacked">Titulo</ion-label>
+      <ion-input formControlName="titulo" placeholder="Digite o titulo do objetivo"></ion-input>
+
+      @if (titulo?.invalid && (titulo?.dirty || titulo?.touched)) {
+        <div class="error-messages">
+          @if (titulo?.errors?.['required']) {
+            <div class="error-message">Titulo é obrigatório</div>
+          }
+          @if (titulo?.errors?.['minlength']) {
+            <div class="error-message">Titulo deve ter no mínimo 4 caracteres</div>
+          }
+          @if (titulo?.errors?.['maxlength']) {
+            <div class="error-message">Titulo não pode ter mais de 100 caracteres</div>
+          }
+        </div>
+      }
+    </ion-item>
+
+
+    <ion-item [class.ion-invalid]="descricao?.invalid && (descricao?.dirty || descricao?.touched)">
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-textarea formControlName="descricao" placeholder="Descreva seu objetivo"></ion-textarea>
+
+      @if (descricao?.invalid && (descricao?.dirty || descricao?.touched)) {
+        <div class="error-messages">
+          @if (descricao?.errors?.['required']) {
+            <div class="error-message">Descrição é obrigatória</div>
+          }
+          @if (descricao?.errors?.['minlength']) {
+            <div class="error-message">Descrição deve ter no mínimo 4 caracteres</div>
+          }
+          @if (descricao?.errors?.['maxlength']) {
+            <div class="error-message">Descrição não pode ter mais de 200 caracteres</div>
+          }
+        </div>
+      }
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Data de Início</ion-label>
+      <ion-datetime-button datetime="dataInicio"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+            id="dataInicio"
+            presentation="date"
+            formControlName="dataInicio"
+            [showDefaultButtons]="true"
+            cancelText="Cancelar"
+            doneText="Confirmar"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Prazo de Conclusão</ion-label>
+      <ion-datetime-button datetime="prazoConclusao"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+            id="prazoConclusao"
+            presentation="date"
+            formControlName="prazoConclusao"
+            [showDefaultButtons]="true"
+            cancelText="Cancelar"
+            doneText="Confirmar"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Progresso</ion-label>
+      <ion-range min="0" max="100" [value]="objetivo.progresso" disabled>
+        <ion-label slot="start">0%</ion-label>
+        <ion-label slot="end">{{ objetivo.progresso }}%</ion-label>
+      </ion-range>
+    </ion-item>
+  </form>
+
+</div>

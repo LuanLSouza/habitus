@@ -17,14 +17,14 @@
                 </ion-card-subtitle>
                 <ion-card-title>{{ habito.nome }}</ion-card-title>
               </ion-card-header>
-              
+
               <ion-card-content>
                 <p>{{ habito.descricao }}</p>
                 <ion-text color="medium" class="date-text">
                   <p>Início: {{ habito.dataInicio | date: 'dd/MM/yyyy' }}</p>
                 </ion-text>
               </ion-card-content>
-              
+
               <ion-item lines="none" detail="false">
                 <ion-buttons slot="end">
                   <ion-button fill="clear" (click)="openEditHabitModal(habito)">
