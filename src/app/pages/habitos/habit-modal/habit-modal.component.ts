@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Habito, FrequencyType, StatusType } from '../../../models/habito.model';
+import { Categoria } from '../../../models/categoria.model';
+import { CategoriaService } from '../../../services/categoria.service';
 
 @Component({
   selector: 'app-habit-modal',
@@ -12,6 +14,7 @@ import { Habito, FrequencyType, StatusType } from '../../../models/habito.model'
 export class HabitModalComponent implements OnInit {
   @Input() habit: Habito | null = null;
   isEditMode = false;
+  categorias: Categoria[] = [];
   
   habitForm: FormGroup = this.fb.group({
     nome: ['', [
@@ -26,17 +29,21 @@ export class HabitModalComponent implements OnInit {
     ]],
     frequencia: [FrequencyType.DAILY, [Validators.required]],
     dataInicio: [new Date().toISOString(), [Validators.required]],
-    status: [StatusType.ACTIVE]
+    status: [StatusType.ACTIVE],
+    categoria: [null]
   });
   frequencyTypes = Object.values(FrequencyType);
   statusTypes = Object.values(StatusType);
   
   constructor(
     private modalCtrl: ModalController,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private categoriaService: CategoriaService
   ) { }
 
   ngOnInit() {
+    this.carregarCategorias();
+    
     if (this.habit) {
       this.isEditMode = true;
       this.habitForm.patchValue({
@@ -44,9 +51,23 @@ export class HabitModalComponent implements OnInit {
         descricao: this.habit.descricao,
         frequencia: this.habit.frequencia,
         dataInicio: new Date(this.habit.dataInicio).toISOString(),
-        status: this.habit.status
+        status: this.habit.status,
+        categoria: this.habit.categoria
       });
     }
+  }
+
+  carregarCategorias() {
+    this.categoriaService.getCategorias().subscribe({
+      next: (categorias) => {
+        this.categorias = categorias.filter(cat => cat.status === 'ativa');
+      },
+      error: (error) => console.error('Erro ao carregar categorias:', error)
+    });
+  }
+
+  compareWithCategoria(cat1: Categoria, cat2: Categoria) {
+    return cat1 && cat2 ? cat1.id === cat2.id : cat1 === cat2;
   }
 
   cancel() {
@@ -76,4 +97,5 @@ export class HabitModalComponent implements OnInit {
   // Getters para facilitar o acesso aos controles do formulário no template
   get nome() { return this.habitForm.get('nome'); }
   get descricao() { return this.habitForm.get('descricao'); }
+  get categoria() { return this.habitForm.get('categoria'); }
 } 

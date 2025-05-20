@@ -5,7 +5,7 @@
     <ion-row>
       <ion-col size="12">
           @for (habito of habitos; track habito.id) {
-            <ion-card class="habit-card">
+            <ion-card class="habit-card" [style.border-left-color]="habito.categoria?.cor || '#7b1fa2'">
               <ion-card-header>
                 <ion-card-subtitle>
                   <ion-badge [color]="getStatusColor(habito.status)" class="status-badge">
@@ -14,6 +14,11 @@
                   <ion-text color="medium" class="frequency-text">
                     {{ habito.frequencia }}
                   </ion-text>
+                  @if (habito.categoria) {
+                    <ion-badge [style.background-color]="habito.categoria.cor" class="categoria-badge">
+                      {{ habito.categoria.nome }}
+                    </ion-badge>
+                  }
                 </ion-card-subtitle>
                 <ion-card-title>{{ habito.nome }}</ion-card-title>
               </ion-card-header>

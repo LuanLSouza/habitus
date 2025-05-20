@@ -48,6 +48,21 @@
     </ion-item>
     
     <ion-item>
+      <ion-label position="stacked">Categoria</ion-label>
+      <ion-select formControlName="categoria" [compareWith]="compareWithCategoria" interface="popover">
+        <ion-select-option [value]="null">Sem categoria</ion-select-option>
+        @for (categoria of categorias; track categoria.id) {
+          <ion-select-option [value]="categoria">
+            <div class="categoria-option">
+              <div class="categoria-color" [style.background-color]="categoria.cor"></div>
+              {{ categoria.nome }}
+            </div>
+          </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+    
+    <ion-item>
       <ion-label position="stacked">Frequência</ion-label>
       <ion-select formControlName="frequencia">
         @for (type of frequencyTypes; track type) {

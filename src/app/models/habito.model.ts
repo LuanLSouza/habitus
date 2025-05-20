@@ -1,3 +1,5 @@
+import { Categoria } from './categoria.model';
+
 export enum FrequencyType {
   DAILY = 'diario',
   WEEKLY = 'semanal',
@@ -17,4 +19,5 @@ export type Habito = {
   frequencia: FrequencyType,
   dataInicio: Date | string,
   status: StatusType,
+  categoria?: Categoria
 } 
