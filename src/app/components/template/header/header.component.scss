@@ -1,0 +1,15 @@
+ion-button {
+    --background: transparent;
+    --color: var(--ion-color-medium);
+    --border-radius: 30px;
+    --box-shadow: 0 4px 12px rgba(155, 89, 182, 0.6);
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    height: 50px;
+    margin: 10px 0 30px;
+    width: 80%;
+    max-width: 300px;
+    position: relative;
+}
