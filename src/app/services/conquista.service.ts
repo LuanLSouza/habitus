@@ -8,7 +8,7 @@ import { Conquista } from '../models/conquista.model';
 })
 export class ConquistaService {
 
-  private readonly API_URL = 'http://localhost:3000/conquistas/'
+  private readonly API_URL = 'http://localhost:3000/conquistas'
   constructor(private http: HttpClient) { }
 
   getConquistas() {

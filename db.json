@@ -33,55 +33,23 @@
       "status": "concluido"
     }
   ],
-  "conquistas": [
+  "conquistas": [],
+  "objetivos": [
     {
-      "habitos": [
-        {
-          "id": "1bc9",
-          "nome": "Beber água",
-          "descricao": "Beber 2L de água por dia",
-          "frequencia": "diario",
-          "dataInicio": "2025-05-01",
-          "status": "ativo"
-        },
-        {
-          "id": "ebfa",
-          "nome": "Meditar",
-          "descricao": "Meditar por 15 minutos",
-          "frequencia": "diario",
-          "dataInicio": "2025-05-01",
-          "status": "ativo"
-        }
-      ],
-      "descricao": "Complete 7 dias seguidos do hábito de beber 2L de água",
-      "dataConquista": "2025-05-14T00:00:00.000Z",
-      "status": true,
-      "id": "1a9b"
+      "titulo": "TESTE CORRETO",
+      "descricao": "asdasdasd",
+      "dataInicio": "2025-05-20T02:18:13.647Z",
+      "prazoConclusao": "2025-05-20T02:18:13.647Z",
+      "progresso": 5,
+      "id": "8858"
     },
     {
-      "id": "5ee4",
-      "habitos": [
-        {
-          "id": "1bc9",
-          "nome": "Beber água",
-          "descricao": "Beber 2L de água por dia",
-          "frequencia": "diario",
-          "dataInicio": "2025-05-01",
-          "status": "ativo"
-        },
-        {
-          "id": "ebfa",
-          "nome": "Meditar",
-          "descricao": "Meditar por 15 minutos",
-          "frequencia": "diario",
-          "dataInicio": "2025-05-01",
-          "status": "ativo"
-        }
-      ],
-      "descricao": "Testando",
-      "dataConquista": "2025-05-18T14:52:24.626Z",
-      "status": true
+      "id": "2806",
+      "titulo": "tetetsts",
+      "descricao": "tetetet",
+      "dataInicio": "2025-05-20T02:26:24.753Z",
+      "prazoConclusao": "2025-05-20T02:26:24.753Z",
+      "progresso": 10
     }
-  ],
-  "objetivos": []
+  ]
 }

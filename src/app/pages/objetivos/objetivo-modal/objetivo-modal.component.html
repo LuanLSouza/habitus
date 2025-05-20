@@ -1,8 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>{{ isEditMode ? 'Editar Objetivo' : 'Novo Objetivo' }}
-
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -83,11 +85,19 @@
 
     <ion-item>
       <ion-label position="stacked">Progresso</ion-label>
-      <ion-range min="0" max="100" [value]="objetivo.progresso" disabled>
+      <ion-range min="0" max="100" formControlName="progresso">
         <ion-label slot="start">0%</ion-label>
-        <ion-label slot="end">{{ objetivo.progresso }}%</ion-label>
+        <ion-label slot="end">{{ objetivoForm.get('progresso')?.value }}%</ion-label>
       </ion-range>
     </ion-item>
   </form>
 
 </div>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" [disabled]="objetivoForm.invalid" (click)="confirm()">
+      {{ isEditMode ? 'Atualizar' : 'Salvar' }} Objetivo
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

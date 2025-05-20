@@ -44,7 +44,33 @@ export class ObjetivoModalComponent  implements OnInit {
         prazoConclusao: new Date(this.objetivo.prazoConclusao).toISOString(),
         progresso: this.objetivo.progresso
       });
+    }
   }
-}
 
+  cancel() {
+    return this.modalCtrl.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    if (this.objetivoForm.invalid) {
+      this.objetivoForm.markAllAsTouched();
+      return;
+    }
+
+    if (this.isEditMode && this.objetivo) {
+      const updatedObjetivo: Objetivo = {
+        ...this.objetivoForm.value,
+        id: this.objetivo.id
+      };
+      return this.modalCtrl.dismiss(updatedObjetivo, 'confirm');
+    } else {
+      const newObjetivo = {
+        ...this.objetivoForm.value
+      };
+      return this.modalCtrl.dismiss(newObjetivo, 'confirm');
+    }
+  }
+
+  get titulo() {return this.objetivoForm.get('titulo'); }
+  get descricao() {return this.objetivoForm.get('descricao'); }
 }
