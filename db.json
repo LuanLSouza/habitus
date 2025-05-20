@@ -31,6 +31,22 @@
         "status": "ativa"
       },
       "id": "08b4"
+    },
+    {
+      "id": "b6e2",
+      "nome": "TESTE",
+      "descricao": "TESTE",
+      "frequencia": "diario",
+      "dataInicio": "2025-05-20T22:59:56.178Z",
+      "status": "ativo",
+      "categoria": {
+        "id": "dd6d",
+        "nome": "Saude",
+        "cor": "#37ff00",
+        "descricao": "teste",
+        "prioridade": "media",
+        "status": "ativa"
+      }
     }
   ],
   "conquistas": [
@@ -97,6 +113,46 @@
       "descricao": "Dormir as 22hrs",
       "dataConquista": "2025-05-20T19:57:54.987Z",
       "status": false
+    },
+    {
+      "id": "0bec",
+      "habitos": [
+        {
+          "nome": "Dormir 8 horas por dia",
+          "descricao": "Dormir as 22hrs",
+          "frequencia": "semanal",
+          "dataInicio": "2025-05-20T19:01:25.196Z",
+          "status": "ativo",
+          "categoria": {
+            "id": "8c2e",
+            "nome": "Bem estar",
+            "cor": "#fbff00",
+            "descricao": "asdasd",
+            "prioridade": "alta",
+            "status": "ativa"
+          },
+          "id": "08b4"
+        },
+        {
+          "id": "b6e2",
+          "nome": "TESTE",
+          "descricao": "TESTE",
+          "frequencia": "diario",
+          "dataInicio": "2025-05-20T22:59:56.178Z",
+          "status": "ativo",
+          "categoria": {
+            "id": "dd6d",
+            "nome": "Saude",
+            "cor": "#37ff00",
+            "descricao": "teste",
+            "prioridade": "media",
+            "status": "ativa"
+          }
+        }
+      ],
+      "descricao": "COnsegui",
+      "dataConquista": "2025-05-20T23:00:53.658Z",
+      "status": true
     }
   ],
   "objetivos": [
@@ -115,6 +171,14 @@
       "dataInicio": "2025-05-20T19:59:32.538Z",
       "prazoConclusao": "2025-12-20T19:59:00",
       "progresso": 7
+    },
+    {
+      "id": "7fb6",
+      "titulo": "Teste",
+      "descricao": "Teste",
+      "dataInicio": "2025-05-20T23:01:00",
+      "prazoConclusao": "2025-05-30T23:01:00",
+      "progresso": 27
     }
   ],
   "categorias": [
@@ -141,6 +205,14 @@
       "prioridade": "alta",
       "status": "ativa",
       "id": "dbc2"
+    },
+    {
+      "id": "dd6d",
+      "nome": "Saude",
+      "cor": "#37ff00",
+      "descricao": "teste",
+      "prioridade": "media",
+      "status": "ativa"
     }
   ]
 }

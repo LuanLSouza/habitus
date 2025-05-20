@@ -1,6 +1,6 @@
 .form-container {
   padding: 16px;
-  height: calc(100% - 112px); /* Altura total menos cabeçalho e rodapé */
+  height: calc(100% - 112px);
   overflow-y: auto;
   background-color: var(--ion-background-color);
 }
@@ -34,12 +34,10 @@ ion-datetime-button {
   margin-top: 8px;
 }
 
-/* Ajuste de espaçamento */
 ion-header + .form-container {
   margin-top: 0;
 }
 
-/* Estilos para validação de formulário */
 .error-messages {
   font-size: 12px;
   padding: 5px 0;
@@ -56,4 +54,4 @@ ion-item.ion-invalid {
 
 ion-button[disabled] {
   opacity: 0.6;
-} 
+}
