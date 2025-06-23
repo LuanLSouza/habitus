@@ -1,4 +1,6 @@
 import { Categoria } from './categoria.model';
+import { Conquista } from './conquista.model';
+import { Objetivo } from './objetivo.model';
 
 export enum FrequencyType {
   DAILY = 'diario',
@@ -20,4 +22,6 @@ export type Habito = {
   dataInicio: Date | string,
   status: StatusType,
   categoria?: Categoria
+  conquistas?: Conquista[];
+  objetivos?: Objetivo[];
 } 

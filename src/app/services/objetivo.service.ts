@@ -6,7 +6,7 @@ import { Objetivo } from '../models/objetivo.model';
   providedIn: 'root'
 })
 export class ObjetivoService {
-  private readonly API_URL = 'http://localhost:3000/objetivos'
+  private readonly API_URL = 'http://localhost:3000/objectives'
   constructor(private http: HttpClient) { }
 
   getObjetivos(){

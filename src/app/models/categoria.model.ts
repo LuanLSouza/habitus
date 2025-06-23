@@ -1,3 +1,5 @@
+import { Habito } from "./habito.model";
+
 export enum PrioridadeType {
   ALTA = 'alta',
   MEDIA = 'media',
@@ -10,10 +12,11 @@ export enum StatusCategoriaType {
 }
 
 export interface Categoria {
-  id?: number;
+  id?: string;
   nome: string;
   cor: string;
   descricao: string;
   prioridade: PrioridadeType;
   status: StatusCategoriaType;
+  habitos?: Habito[];
 } 

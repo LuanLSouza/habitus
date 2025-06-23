@@ -11,7 +11,7 @@
                 <ion-badge [color]="getStatusColor(categoria.status)" class="status-badge">
                   {{ categoria.status }}
                 </ion-badge>
-                <ion-badge color="medium" class="prioridade-badge">
+                <ion-badge [color]="getPrioridadeColor(categoria.prioridade)" class="prioridade-badge">
                   {{ categoria.prioridade }}
                 </ion-badge>
               </ion-card-subtitle>

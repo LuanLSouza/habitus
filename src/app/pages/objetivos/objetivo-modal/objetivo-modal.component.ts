@@ -24,8 +24,8 @@ export class ObjetivoModalComponent  implements OnInit {
       Validators.minLength(4),
       Validators.maxLength(200)
     ]],
-    dataInicio: [new Date().toISOString(), [Validators.required]],
-    prazoConclusao: [new Date().toISOString(), [Validators.required]],
+    dataInicio: [new Date().toISOString().slice(0, 10), [Validators.required]],
+    prazoConclusao: [new Date().toISOString().slice(0, 10), [Validators.required]],
     progresso: [0, [Validators.required]]
   });
 
@@ -40,8 +40,8 @@ export class ObjetivoModalComponent  implements OnInit {
       this.objetivoForm.patchValue({
         titulo: this.objetivo.titulo,
         descricao: this.objetivo.descricao,
-        dataInicio: new Date(this.objetivo.dataInicio).toISOString(),
-        prazoConclusao: new Date(this.objetivo.prazoConclusao).toISOString(),
+        dataInicio: new Date(this.objetivo.dataInicio).toISOString().slice(0, 10),
+        prazoConclusao: new Date(this.objetivo.prazoConclusao).toISOString().slice(0, 10),
         progresso: this.objetivo.progresso
       });
     }
@@ -57,18 +57,20 @@ export class ObjetivoModalComponent  implements OnInit {
       return;
     }
 
-    if (this.isEditMode && this.objetivo) {
-      const updatedObjetivo: Objetivo = {
-        ...this.objetivoForm.value,
-        id: this.objetivo.id
-      };
-      return this.modalCtrl.dismiss(updatedObjetivo, 'confirm');
-    } else {
-      const newObjetivo = {
-        ...this.objetivoForm.value
-      };
-      return this.modalCtrl.dismiss(newObjetivo, 'confirm');
-    }
+  const formValue = { ...this.objetivoForm.value, progresso: Number(this.objetivoForm.value.progresso) };
+
+  if (this.isEditMode && this.objetivo) {
+    const updatedObjetivo: Objetivo = {
+      ...formValue,
+      id: this.objetivo.id
+    };
+    return this.modalCtrl.dismiss(updatedObjetivo, 'confirm');
+  } else {
+    const newObjetivo = {
+      ...formValue
+    };
+    return this.modalCtrl.dismiss(newObjetivo, 'confirm');
+  }
   }
 
   get titulo() {return this.objetivoForm.get('titulo'); }

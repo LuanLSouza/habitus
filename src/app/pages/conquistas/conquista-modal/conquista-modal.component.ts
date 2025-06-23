@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Conquista } from 'src/app/models/conquista.model';
 import { Habito } from 'src/app/models/habito.model';
+import { Objetivo } from 'src/app/models/objetivo.model';
 import { HabitService } from 'src/app/services/habit.service';
+import { ObjetivoService } from 'src/app/services/objetivo.service';
 
 @Component({
   selector: 'app-conquista-modal',
@@ -16,21 +18,24 @@ export class ConquistaModalComponent  implements OnInit {
   isEditMode = false;
   
   conquistaForm: FormGroup = this.fb.group({
-    habitos: ['', [Validators.required]],
+    habitos: [],
+    objetivos: [],
     descricao:['', [
       Validators.required, 
       Validators.minLength(4), 
       Validators.maxLength(200)
     ]],
-    dataConquista: [new Date().toISOString(), [Validators.required]],
+    data: [new Date().toISOString().slice(0, 10), [Validators.required]],
     status: [true]
   });
 
   habitos: Habito[] = [];
+  objetivos: Objetivo[] = [];
   
   constructor(
     private fb: FormBuilder,
     private habitoService: HabitService,
+    private objetivoService: ObjetivoService,
     private modalCtrl: ModalController
   ) { }
 
@@ -47,13 +52,26 @@ export class ConquistaModalComponent  implements OnInit {
       }
     );
 
+    this.objetivoService.getObjetivos().subscribe(
+      {
+        next: (response) => {
+          this.objetivos = response;
+        },
+        error: (error) => {
+          alert('Erro ao carregar os objetivos:');
+          console.error(error);
+        }
+      }
+    );
+
     if (this.conquista) {
       this.isEditMode = true;
       this.conquistaForm.patchValue({
         habitos: this.conquista.habitos,
+        objetivos: this.conquista.objetivos,
         descricao: this.conquista.descricao,
-        dataConquista: new Date(this.conquista.dataConquista).toISOString(),
-        status: this.conquista.status
+        data: new Date(this.conquista.data).toISOString().slice(0, 10),
+        status: this.conquista.status === 'ativa'
       });
     }
 
@@ -72,16 +90,19 @@ export class ConquistaModalComponent  implements OnInit {
       this.conquistaForm.markAllAsTouched();
       return;
     }
+    const statusEnum = this.conquistaForm.value.status ? 'ativa' : 'inativa';
     
     if (this.isEditMode && this.conquista) {
       const updatedConquista: Conquista = {
         ...this.conquistaForm.value,
+        status: statusEnum,
         id: this.conquista.id
       };
       return this.modalCtrl.dismiss(updatedConquista, 'confirm');
     } else {
       const newConquista = {
-        ...this.conquistaForm.value
+        ...this.conquistaForm.value,
+        status: statusEnum,
       };
       return this.modalCtrl.dismiss(newConquista, 'confirm');
     }

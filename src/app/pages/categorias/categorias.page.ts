@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoriaService } from '../../services/categoria.service';
-import { Categoria, StatusCategoriaType } from '../../models/categoria.model';
+import { Categoria, PrioridadeType, StatusCategoriaType } from '../../models/categoria.model';
 import { Observable } from 'rxjs';
 import { ModalController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { CategoriaModalComponent } from './categoria-modal/categoria-modal.component';
@@ -32,6 +32,19 @@ export class CategoriasPage implements OnInit, ViewWillEnter {
         return 'success';
       case StatusCategoriaType.INATIVA:
         return 'danger';
+      default:
+        return 'medium';
+    }
+  }
+
+  getPrioridadeColor(prioridade: PrioridadeType): string{
+    switch (prioridade) {
+      case PrioridadeType.ALTA:
+        return 'danger';
+      case PrioridadeType.MEDIA:
+        return 'warning';
+      case PrioridadeType.BAIXA:
+        return 'primary';
       default:
         return 'medium';
     }

@@ -6,7 +6,7 @@ import { Categoria } from '../models/categoria.model';
   providedIn: 'root'
 })
 export class CategoriaService {
- private readonly API_URL= "http://localhost:3000/categorias";
+ private readonly API_URL= "http://localhost:3000/categories";
 
   constructor(private http: HttpClient) { }
 

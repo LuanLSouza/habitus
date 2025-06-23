@@ -17,6 +17,14 @@
       </ion-select>
     </ion-item>
 
+    <ion-item>
+      <ion-select formControlName="objetivos" [compareWith]="compareWith" label="Objetivos relacionados" label-placement="floating" multiple="true">
+        @for (objetivo of objetivos; track objetivo.id) {
+          <ion-select-option [value]="objetivo">{{ objetivo.titulo }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
     <ion-item [class.ion-invalid]="descricao?.invalid &&(descricao?.dirty || descricao?.touched)">
       <ion-label position="stacked">Descrição</ion-label>
       <ion-input formControlName="descricao" placeholder="Descreva sua conquista"></ion-input>
@@ -36,13 +44,13 @@
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Data da conquista</ion-label>
-      <ion-datetime-button datetime="dataConquista"></ion-datetime-button>
+      <ion-datetime-button datetime="data"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
           <ion-datetime 
-            id="dataConquista" 
+            id="data" 
             presentation="date"
-            formControlName="dataConquista"
+            formControlName="data"
             [showDefaultButtons]="true"
             cancelText="Cancelar"
             doneText="Confirmar"

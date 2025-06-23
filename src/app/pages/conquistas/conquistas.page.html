@@ -8,28 +8,50 @@
                     <ion-card class="conquista-card">
                         <ion-card-header>
                             <ion-card-title>
-                                {{conquista.descricao}} <span class="status" [ngClass]="conquista.status ? 'concluido' : 'pendente'">{{ conquista.status ? 'Concluída' : 'Pendente' }} </span>
+                                {{conquista.descricao}} 
+                                  <span class="status"
+                                        [ngClass]="conquista.status === 'ativa' ? 'pendente' : 'concluido'">
+                                        {{ conquista.status === 'ativa' ? 'Pendente' : 'Concluída' }}
+                                </span>
                             </ion-card-title>
                         </ion-card-header>
 
                         <ion-card-content>
                             <ion-text color="medium" class="date-text">
-                                <p>Data: {{ conquista.dataConquista| date: 'dd/MM/yyyy' }}</p>
+                                <p>Data desta conquista: {{ conquista.data| date: 'dd/MM/yyyy' }}</p>
                             </ion-text>
                             <div class="habitos-relacionados">
-                                <h1>Hábitos Relacionados:</h1>
-                                <ion-list>
-                                    @for (habito of conquista.habitos; track habito.id) {
-                                        <ion-item lines="none">
-                                            <ion-label>
-                                                <h2>{{ habito.nome }}</h2>
-                                                <p>Frequência: {{ habito.frequencia }}</p>
-                                                <p>Início: {{ habito.dataInicio | date: 'dd/MM/yyyy' }}</p>
-                                                <p>Status: {{ habito.status }}</p>
-                                            </ion-label>
-                                        </ion-item>
-                                    }
-                                </ion-list>
+                                @if (conquista.habitos.length > 0) {
+                                    <h1>Hábitos Relacionados:</h1>
+                                    <ion-list>
+                                        @for (habito of conquista.habitos; track habito.id) {
+                                            <ion-item lines="none">
+                                                <ion-label>
+                                                    <h2>{{ habito.nome }}</h2>
+                                                    <p>Frequência: {{ habito.frequencia }}</p>
+                                                    <p>Início: {{ habito.dataInicio | date: 'dd/MM/yyyy' }}</p>
+                                                    <p>Status: {{ habito.status }}</p>
+                                                </ion-label>
+                                            </ion-item>
+                                        }
+                                    </ion-list>
+                                }
+                                @if (conquista.objetivos.length > 0) {
+                                    <h1>Objetivos Relacionados:</h1>
+                                    <ion-list>
+                                        @for (objetivo of conquista.objetivos; track objetivo.id){
+                                            <ion-item lines="none">
+                                                <ion-label>
+                                                    <h2>{{ objetivo.titulo }}</h2>
+                                                    <p>Descrição: {{ objetivo.descricao }}</p>
+                                                    <p>Progresso: {{ objetivo.progresso }}%</p>
+                                                </ion-label>
+                                            </ion-item>
+                                        }
+
+                                    </ion-list>
+                                }
+
                             </div>
                             <ion-item lines="none" detail="false">
                                 <ion-buttons slot="end">
@@ -49,7 +71,7 @@
                 @if (conquistas.length === 0) {
                     <ion-card>
                     <ion-card-content class="nao-encontrado">
-                        <p class="ion-text-center">Nenhum hábito encontrado.</p>
+                        <p class="ion-text-center">Nenhuna conquista encontrada.</p> 
                     </ion-card-content>
                     </ion-card>
                 }

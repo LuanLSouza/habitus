@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HabitService {
 
-  private readonly API_URL = 'http://localhost:3000/habitos';
+  private readonly API_URL = 'http://localhost:3000/habits';
   constructor(private http: HttpClient) { }
 
   getHabitos() {

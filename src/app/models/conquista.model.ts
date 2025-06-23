@@ -1,11 +1,17 @@
 import { Habito } from "./habito.model"
+import { Objetivo } from "./objetivo.model";
 
 
-export type Conquista = {
-    id?: number,
+export enum StatusConquistaType {
+  ATIVA = 'ativa',
+  INATIVA = 'inativa'
+}
+
+export interface Conquista {
+    id?: string,
     habitos: Habito[],
     descricao: string,
-    dataConquista: Date | string,
-    status: boolean
-
+    data: Date | string,
+    status: StatusConquistaType,
+    objetivos: Objetivo[];
 }
