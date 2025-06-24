@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HabitService } from '../../services/habit.service';
+import { HabitService, HabitFilter } from '../../services/habit.service';
 import { Habito, FrequencyType, StatusType } from '../../models/habito.model';
 import { Observable } from 'rxjs';
 import { ModalController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { HabitModalComponent } from './habit-modal/habit-modal.component';
+import { SearchModalComponent } from './search-modal/search-modal.component';
 
 @Component({
   selector: 'app-habitos',
@@ -16,6 +17,8 @@ export class HabitosPage implements OnInit, ViewWillEnter {
   habitos: Habito[] = [];
   FrequencyType = FrequencyType;
   StatusType = StatusType;
+  isSearchActive = false;
+  currentFilters: HabitFilter | null = null;
 
   constructor(
     private habitService: HabitService,
@@ -25,6 +28,12 @@ export class HabitosPage implements OnInit, ViewWillEnter {
   }
 
   ionViewWillEnter() {
+    this.loadAllHabits();
+  }
+
+  loadAllHabits() {
+    this.isSearchActive = false;
+    this.currentFilters = null;
     this.habitService.getHabitos().subscribe(
       {
         next: (response) => {
@@ -36,6 +45,42 @@ export class HabitosPage implements OnInit, ViewWillEnter {
         }
       }
     );
+  }
+
+  async openSearchModal() {
+    const modal = await this.modalController.create({
+      component: SearchModalComponent,
+      componentProps: {
+        currentFilters: this.currentFilters
+      }
+    });
+
+    await modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'search' && data) {
+      this.performSearch(data);
+    }
+  }
+
+  performSearch(filters: HabitFilter) {
+    this.isSearchActive = true;
+    this.currentFilters = filters;
+    
+    this.habitService.searchWithFilters(filters).subscribe({
+      next: (response) => {
+        this.habitos = response.data;
+      },
+      error: (error) => {
+        console.error('Erro na busca:', error);
+        alert('Erro ao realizar a busca');
+      }
+    });
+  }
+
+  resetSearch() {
+    this.loadAllHabits();
   }
 
   getStatusColor(status: StatusType): string {
@@ -115,10 +160,11 @@ async confirmDeleteHabit(habito: Habito) {
 }
 
   atualizarHabitos() {
-    this.habitService.getHabitos().subscribe({
-        next: (habitos) => this.habitos = habitos,
-        error: (error) => console.error('Erro ao carregar os hábitos:', error)
-    });
+    if (this.isSearchActive && this.currentFilters) {
+      this.performSearch(this.currentFilters);
+    } else {
+      this.loadAllHabits();
+    }
 }
 
   ngOnInit() {

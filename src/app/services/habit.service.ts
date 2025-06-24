@@ -1,6 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Habito } from '../models/habito.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface HabitFilter {
+  nome?: string;
+  descricao?: string;
+  frequencia?: string;
+  status?: string;
+  categoriaId?: string;
+  dataInicio?: string;
+  dataFim?: string;
+  dataInicioRange?: string;
+  dataFimRange?: string;
+  objetivoIds?: string[];
+  conquistaIds?: string[];
+  orderBy?: 'nome' | 'dataInicio' | 'status' | 'frequencia';
+  orderDirection?: 'ASC' | 'DESC';
+  page?: number;
+  limit?: number;
+}
+
+export interface HabitSearchResponse {
+  data: Habito[];
+  total: number;
+  page: number;
+  limit: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +40,27 @@ export class HabitService {
     return this.http.get<Habito[]>(this.API_URL)
   }
 
-  getById(id: number) {
+  getById(id: string) {
     return this.http.get<Habito>(`${this.API_URL}/${id}`)
+  }
+
+  searchWithFilters(filters: HabitFilter): Observable<HabitSearchResponse> {
+    let params = new HttpParams();
+    
+    Object.keys(filters).forEach(key => {
+      const value = filters[key as keyof HabitFilter];
+      if (value !== undefined && value !== null && value !== '') {
+        if (Array.isArray(value)) {
+          value.forEach(item => {
+            params = params.append(key, item);
+          });
+        } else {
+          params = params.set(key, value.toString());
+        }
+      }
+    });
+
+    return this.http.get<HabitSearchResponse>(`${this.API_URL}/search`, { params });
   }
 
   private add(habito: Habito) {

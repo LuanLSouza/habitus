@@ -8,6 +8,7 @@ import { HabitosPageRoutingModule } from './habitos-routing.module';
 
 import { HabitosPage } from './habitos.page';
 import { HabitModalComponent } from './habit-modal/habit-modal.component';
+import { SearchModalComponent } from './search-modal/search-modal.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderModule } from 'src/app/components/template/header/header.module';
 
@@ -24,8 +25,7 @@ import { HeaderModule } from 'src/app/components/template/header/header.module';
   declarations: [
     HabitosPage,
     HabitModalComponent,
-    
-    
+    SearchModalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

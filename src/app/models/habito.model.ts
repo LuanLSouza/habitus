@@ -15,11 +15,12 @@ export enum StatusType {
 }
 
 export type Habito = {
-  id?: number,
+  id?: string,
   nome: string,
   descricao: string,
   frequencia: FrequencyType,
   dataInicio: Date | string,
+  dataFim?: Date | string,
   status: StatusType,
   categoria?: Categoria
   conquistas?: Conquista[];

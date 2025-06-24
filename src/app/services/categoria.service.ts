@@ -14,7 +14,7 @@ export class CategoriaService {
     return this.http.get<Categoria[]>(this.API_URL);
   }
 
-  getCategoria(id: number){
+  getCategoria(id: string){
     return this.http.get<Categoria>(`${this.API_URL}/${id}`);
   }
 

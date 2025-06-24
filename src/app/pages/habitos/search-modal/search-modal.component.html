@@ -1,0 +1,126 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Busca Avançada</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="cancel()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <div class="search-form">
+    <form [formGroup]="searchForm">
+      <ion-list>
+        <!-- Filtros básicos -->
+        <ion-item>
+          <ion-label position="stacked">Nome</ion-label>
+          <ion-input formControlName="nome" placeholder="Digite o nome do hábito"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="stacked">Descrição</ion-label>
+          <ion-input formControlName="descricao" placeholder="Digite a descrição"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="stacked">Frequência</ion-label>
+          <ion-select formControlName="frequencia" placeholder="Selecione a frequência">
+            <ion-select-option value="">Todas</ion-select-option>
+            <ion-select-option [value]="FrequencyType.DAILY">Diário</ion-select-option>
+            <ion-select-option [value]="FrequencyType.WEEKLY">Semanal</ion-select-option>
+            <ion-select-option [value]="FrequencyType.MONTHLY">Mensal</ion-select-option>
+          </ion-select>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="stacked">Status</ion-label>
+          <ion-select formControlName="status" placeholder="Selecione o status">
+            <ion-select-option value="">Todos</ion-select-option>
+            <ion-select-option [value]="StatusType.ACTIVE">Ativo</ion-select-option>
+            <ion-select-option [value]="StatusType.PAUSED">Pausado</ion-select-option>
+            <ion-select-option [value]="StatusType.COMPLETED">Concluído</ion-select-option>
+          </ion-select>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="stacked">Categoria</ion-label>
+          <ion-select formControlName="categoriaId" placeholder="Selecione a categoria">
+            <ion-select-option value="">Todas</ion-select-option>
+            @for (categoria of categorias; track categoria.id) {
+              <ion-select-option [value]="categoria.id">
+                {{ categoria.nome }}
+              </ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+  
+        <ion-item button (click)="toggleAdvancedFilters()">
+          <ion-label>Filtros Avançados</ion-label>
+          <ion-icon [name]="showAdvancedFilters ? 'chevron-up' : 'chevron-down'" slot="end"></ion-icon>
+        </ion-item>
+  
+        @if (showAdvancedFilters) {
+          <div>
+            <ion-item>
+              <ion-label position="stacked">Data de Início</ion-label>
+              <ion-input formControlName="dataInicio" type="date"></ion-input>
+            </ion-item>
+  
+            <ion-item>
+              <ion-label position="stacked">Data de Fim</ion-label>
+              <ion-input formControlName="dataFim" type="date"></ion-input>
+            </ion-item>
+  
+            <ion-item>
+              <ion-label position="stacked">Data de Início (Range)</ion-label>
+              <ion-input formControlName="dataInicioRange" type="date"></ion-input>
+            </ion-item>
+  
+            <ion-item>
+              <ion-label position="stacked">Data de Fim (Range)</ion-label>
+              <ion-input formControlName="dataFimRange" type="date"></ion-input>
+            </ion-item>
+  
+            <ion-item>
+              <ion-label position="stacked">Ordenar por</ion-label>
+              <ion-select formControlName="orderBy">
+                <ion-select-option value="nome">Nome</ion-select-option>
+                <ion-select-option value="dataInicio">Data de Início</ion-select-option>
+                <ion-select-option value="status">Status</ion-select-option>
+                <ion-select-option value="frequencia">Frequência</ion-select-option>
+              </ion-select>
+            </ion-item>
+  
+            <ion-item>
+              <ion-label position="stacked">Direção</ion-label>
+              <ion-select formControlName="orderDirection">
+                <ion-select-option value="ASC">Crescente</ion-select-option>
+                <ion-select-option value="DESC">Decrescente</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        }
+      </ion-list>
+    </form>
+</div>
+  
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button fill="outline" (click)="resetFilters()">
+          <ion-icon name="refresh" slot="start"></ion-icon>
+          Resetar
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button fill="outline" (click)="cancel()">
+          Cancelar
+        </ion-button>
+        <ion-button (click)="search()">
+          <ion-icon name="search" slot="start"></ion-icon>
+          Buscar
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
