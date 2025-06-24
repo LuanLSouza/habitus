@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, ViewWillEnter } from '@ionic/angular';
+import { AlertController, ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { Conquista } from 'src/app/models/conquista.model';
 import { ConquistaService } from 'src/app/services/conquista.service';
 import { ConquistaModalComponent } from './conquista-modal/conquista-modal.component';
@@ -15,7 +15,8 @@ export class ConquistasPage implements OnInit, ViewWillEnter {
   constructor(
     private conquistaService: ConquistaService,
     private alertController: AlertController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -46,8 +47,29 @@ export class ConquistasPage implements OnInit, ViewWillEnter {
 
     if (role === 'confirm' && data) {
       this.conquistaService.save(data).subscribe({
-        next: () => this.atualizarConquistas(),
-        error: (err) => console.error('Erro ao salvar conquista:', err)
+          next: () => {
+            this.toastController.create({
+              message: 'Conquista adicionada com sucesso!',
+              duration: 2000,
+              position: 'top',
+              color: 'success'
+            }).then(toast => toast.present());
+            this.atualizarConquistas()
+          },
+          error: (err) => {
+          this.toastController.create({
+              message: err.error.message,
+              header: 'Erro ao adicionar conquista: ' + data.descricao + ' Tente novamente.',
+              position: 'top',
+              color: 'danger',
+              buttons:[
+                {
+                  text: 'OK',
+                  role: 'cancel'
+                }
+              ]
+            }).then(toast => toast.present());
+          }
       });
     }
   }
@@ -66,8 +88,29 @@ export class ConquistasPage implements OnInit, ViewWillEnter {
   
     if (role === 'confirm' && data) {
         this.conquistaService.save(data).subscribe({
-            next: () => this.atualizarConquistas(),
-            error: (err) => console.error('Erro ao atualizar conquista:', err)
+          next: () => {
+            this.toastController.create({
+              message: 'Conquista atualizada com sucesso!',
+              duration: 2000,
+              position: 'top',
+              color: 'success'
+            }).then(toast => toast.present());
+            this.atualizarConquistas()
+          },
+          error: (err) => {
+            this.toastController.create({
+              message: err.error.message,
+              header: 'Erro ao atualizar conquista: ' + data.descricao + ' Tente novamente.',
+              position: 'top',
+              color: 'danger',
+              buttons:[
+                {
+                  text: 'OK',
+                  role: 'cancel'
+                }
+              ]
+            }).then(toast => toast.present());
+          }
         });
     }
   }
@@ -87,8 +130,29 @@ export class ConquistasPage implements OnInit, ViewWillEnter {
                 cssClass: 'danger',
                 handler: () => {
                     this.conquistaService.deleteConquista(conquista).subscribe({
-                        next: () => this.atualizarConquistas(),
-                        error: (err) => console.error('Erro ao excluir conquista:', err)
+                        next: () => {
+                          this.toastController.create({
+                            message: 'Conquista removida com sucesso!',
+                            duration: 2000,
+                            position: 'top',
+                            color: 'success'
+                          }).then(toast => toast.present());
+                          this.atualizarConquistas()
+                        },
+                        error: (err) => {
+                        this.toastController.create({
+                          message: err.error.message,
+                          header: 'Erro ao remover conquista.',
+                          position: 'top',
+                          color: 'danger',
+                          buttons:[
+                            {
+                              text: 'OK',
+                              role: 'cancel'
+                            }
+                          ]
+                        }).then(toast => toast.present());
+                      }
                     });
                 }
             }

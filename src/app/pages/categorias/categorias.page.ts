@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria, PrioridadeType, StatusCategoriaType } from '../../models/categoria.model';
 import { Observable } from 'rxjs';
-import { ModalController, AlertController, ViewWillEnter } from '@ionic/angular';
+import { ModalController, AlertController, ViewWillEnter, ToastController } from '@ionic/angular';
 import { CategoriaModalComponent } from './categoria-modal/categoria-modal.component';
 
 @Component({
@@ -19,7 +19,8 @@ export class CategoriasPage implements OnInit, ViewWillEnter {
   constructor(
     private categoriaService: CategoriaService,
     private alertController: AlertController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) { }
 
   ionViewWillEnter() {
@@ -61,8 +62,29 @@ export class CategoriasPage implements OnInit, ViewWillEnter {
 
     if (role === 'confirm' && data) {
       this.categoriaService.save(data).subscribe({
-        next: () => this.atualizarCategorias(),
-        error: (err) => console.error('Erro ao salvar categoria:', err)
+          next: () => {
+            this.toastController.create({
+              message: 'Categoria adicionada com sucesso!',
+              duration: 2000,
+              position: 'top',
+              color: 'success'
+            }).then(toast => toast.present());
+            this.atualizarCategorias()
+          },
+          error: (err) => {
+          this.toastController.create({
+              message: err.error.message,
+              header: 'Erro ao adicionar categoria: ' + data.nome + ' Tente novamente.',
+              position: 'top',
+              color: 'danger',
+              buttons:[
+                {
+                  text: 'OK',
+                  role: 'cancel'
+                }
+              ]
+            }).then(toast => toast.present());
+          }
       });
     }
   }
@@ -81,8 +103,29 @@ export class CategoriasPage implements OnInit, ViewWillEnter {
 
     if (role === 'confirm' && data) {
       this.categoriaService.save(data).subscribe({
-        next: () => this.atualizarCategorias(),
-        error: (err) => console.error('Erro ao atualizar categoria:', err)
+          next: () => {
+            this.toastController.create({
+              message: 'Categoria atualizada com sucesso!',
+              duration: 2000,
+              position: 'top',
+              color: 'success'
+            }).then(toast => toast.present());
+            this.atualizarCategorias()
+          },
+          error: (err) => {
+          this.toastController.create({
+              message: err.error.message,
+              header: 'Erro ao atualizar categoria: ' + data.nome + ' Tente novamente.',
+              position: 'top',
+              color: 'danger',
+              buttons:[
+                {
+                  text: 'OK',
+                  role: 'cancel'
+                }
+              ]
+            }).then(toast => toast.present());
+          }
       });
     }
   }
@@ -102,8 +145,29 @@ export class CategoriasPage implements OnInit, ViewWillEnter {
           cssClass: 'danger',
           handler: () => {
             this.categoriaService.deleteCategoria(categoria).subscribe({
-              next: () => this.atualizarCategorias(),
-              error: (err) => console.error('Erro ao excluir categoria:', err)
+                        next: () => {
+                          this.toastController.create({
+                            message: 'Categoria removida com sucesso!',
+                            duration: 2000,
+                            position: 'top',
+                            color: 'success'
+                          }).then(toast => toast.present());
+                          this.atualizarCategorias()
+                        },
+                        error: (err) => {
+                        this.toastController.create({
+                          message: err.error.message,
+                          header: 'Erro ao remover categoria.',
+                          position: 'top',
+                          color: 'danger',
+                          buttons:[
+                            {
+                              text: 'OK',
+                              role: 'cancel'
+                            }
+                          ]
+                        }).then(toast => toast.present());
+                      }
             });
           }
         }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HabitService, HabitFilter } from '../../services/habit.service';
 import { Habito, FrequencyType, StatusType } from '../../models/habito.model';
 import { Observable } from 'rxjs';
-import { ModalController, AlertController, ViewWillEnter } from '@ionic/angular';
+import { ModalController, AlertController, ViewWillEnter, ToastController } from '@ionic/angular';
 import { HabitModalComponent } from './habit-modal/habit-modal.component';
 import { SearchModalComponent } from './search-modal/search-modal.component';
 
@@ -23,7 +23,8 @@ export class HabitosPage implements OnInit, ViewWillEnter {
   constructor(
     private habitService: HabitService,
     private alertController: AlertController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController,
   ) {
   }
 
@@ -107,8 +108,29 @@ export class HabitosPage implements OnInit, ViewWillEnter {
 
     if (role === 'confirm' && data) {
         this.habitService.save(data).subscribe({
-            next: () => this.atualizarHabitos(),
-            error: (err) => console.error('Erro ao salvar hábito:', err)
+        next: () => {
+          this.toastController.create({
+            message: 'Habito atualizado com sucesso!',
+            duration: 2000,
+            position: 'top',
+            color: 'success'
+          }).then(toast => toast.present());
+          this.atualizarHabitos()
+        },
+        error: (err) => {
+        this.toastController.create({
+          message: err.error.message,
+          header: 'Erro ao atualizar habito: ' + data.nome + ' Tente novamente.',
+          position: 'top',
+          color: 'danger',
+          buttons:[
+            {
+              text: 'OK',
+              role: 'cancel'
+            }
+          ]
+        }).then(toast => toast.present());
+        }
         });
     }
 }
@@ -127,8 +149,29 @@ async openEditHabitModal(habit: Habito) {
 
   if (role === 'confirm' && data) {
       this.habitService.save(data).subscribe({
-          next: () => this.atualizarHabitos(),
-          error: (err) => console.error('Erro ao atualizar hábito:', err)
+          next: () => {
+            this.toastController.create({
+              message: 'Habito adicionado com sucesso!',
+              duration: 2000,
+              position: 'top',
+              color: 'success'
+            }).then(toast => toast.present());
+            this.atualizarHabitos()
+          },
+          error: (err) => {
+          this.toastController.create({
+            message: err.error.message,
+            header: 'Erro ao adicionar habito: ' + data.nome + ' Tente novamente.',
+            position: 'top',
+            color: 'danger',
+            buttons:[
+              {
+                text: 'OK',
+                role: 'cancel'
+              }
+            ]
+          }).then(toast => toast.present());
+        }
       });
   }
 }
@@ -148,8 +191,29 @@ async confirmDeleteHabit(habito: Habito) {
               cssClass: 'danger',
               handler: () => {
                   this.habitService.deleteHabit(habito).subscribe({
-                      next: () => this.atualizarHabitos(),
-                      error: (err) => console.error('Erro ao excluir hábito:', err)
+              next: () => {
+                this.toastController.create({
+                  message: 'Habito removido com sucesso!',
+                  duration: 2000,
+                  position: 'top',
+                  color: 'success'
+                }).then(toast => toast.present());
+                this.atualizarHabitos()
+              },
+              error: (err) => {
+                this.toastController.create({
+                  message: err.error.message,
+                  header: 'Erro ao remover habito.',
+                  position: 'top',
+                  color: 'danger',
+                  buttons:[
+                    {
+                      text: 'OK',
+                      role: 'cancel'
+                    }
+                  ]
+                }).then(toast => toast.present());
+              }
                   });
               }
           }
@@ -159,7 +223,7 @@ async confirmDeleteHabit(habito: Habito) {
   await alert.present();
 }
 
-  atualizarHabitos() {
+atualizarHabitos() {
     if (this.isSearchActive && this.currentFilters) {
       this.performSearch(this.currentFilters);
     } else {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, ViewWillEnter } from '@ionic/angular';
+import { AlertController, ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { Objetivo } from 'src/app/models/objetivo.model';
 import { ObjetivoService } from 'src/app/services/objetivo.service';
 import { ObjetivoModalComponent } from './objetivo-modal/objetivo-modal.component';
@@ -16,7 +16,8 @@ export class ObjetivosPage implements OnInit, ViewWillEnter {
   constructor(
     private objetivoService: ObjetivoService,
     private alertController: AlertController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -52,8 +53,29 @@ export class ObjetivosPage implements OnInit, ViewWillEnter {
           cssClass: 'danger',
           handler: () => {
             this.objetivoService.deteleObjetivo(objetivo).subscribe({
-              next: () => this.atualizarObjetivos(),
-              error: (err) => console.error('Erro ao excluir objetivo:', err)
+              next: () => {
+                this.toastController.create({
+                  message: 'Objetivo removido com sucesso!',
+                  duration: 2000,
+                  position: 'top',
+                  color: 'success'
+                }).then(toast => toast.present());
+                this.atualizarObjetivos()
+              },
+              error: (err) => {
+                this.toastController.create({
+                  message: err.error.message,
+                  header: 'Erro ao remover objetivo.',
+                  position: 'top',
+                  color: 'danger',
+                  buttons:[
+                    {
+                      text: 'OK',
+                      role: 'cancel'
+                    }
+                  ]
+                }).then(toast => toast.present());
+              }
             })
           }
         }
@@ -74,8 +96,29 @@ export class ObjetivosPage implements OnInit, ViewWillEnter {
 
     if (role === 'confirm' && data) {
       this.objetivoService.save(data).subscribe({
-        next: () => this.atualizarObjetivos(),
-        error: (err) => console.error('Erro ao salvar objetivo:', err)
+        next: () => {
+          this.toastController.create({
+            message: 'Objetivo adicionado com sucesso!',
+            duration: 2000,
+            position: 'top',
+            color: 'success'
+          }).then(toast => toast.present());
+          this.atualizarObjetivos()
+        },
+        error: (err) => {
+          this.toastController.create({
+            message: err.error.message,
+            header: 'Erro ao adicionar objetivo: ' + data.titulo + ' Tente novamente.',
+            position: 'top',
+            color: 'danger',
+            buttons:[
+              {
+                text: 'OK',
+                role: 'cancel'
+              }
+            ]
+          }).then(toast => toast.present());
+        }
       });
     }
   }
@@ -94,8 +137,29 @@ export class ObjetivosPage implements OnInit, ViewWillEnter {
 
     if (role === 'confirm' && data) {
       this.objetivoService.save(data).subscribe({
-        next: () => this.atualizarObjetivos(),
-        error: (err) => console.error('Erro ao atualizar objetivo:', err)
+        next: () => {
+          this.toastController.create({
+            message: 'Objetivo atualizado com sucesso!',
+            duration: 2000,
+            position: 'top',
+            color: 'success'
+          }).then(toast => toast.present());
+          this.atualizarObjetivos()
+        },
+        error: (err) => {
+          this.toastController.create({
+            message: err.error.message,
+            header: 'Erro ao adicionar objetivo: ' + data.titulo + ' Tente novamente.',
+            position: 'top',
+            color: 'danger',
+            buttons:[
+              {
+                text: 'OK',
+                role: 'cancel'
+              }
+            ]
+          }).then(toast => toast.present());
+        }
       });
     }
   }
