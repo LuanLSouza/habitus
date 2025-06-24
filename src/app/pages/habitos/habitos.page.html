@@ -42,6 +42,9 @@
               <p>{{ habito.descricao }}</p>
               <ion-text color="medium" class="date-text">
                 <p>Início: {{ habito.dataInicio | date: 'dd/MM/yyyy' }}</p>
+                @if (habito.dataFim) {
+                  <p>Fim: {{ habito.dataFim | date: 'dd/MM/yyyy' }}</p>
+                }
               </ion-text>
             </ion-card-content>
 
