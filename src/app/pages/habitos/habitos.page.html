@@ -2,27 +2,30 @@
 
 <ion-content>
   <!-- Indicador de busca ativa -->
-  <ion-card *ngIf="isSearchActive" class="search-indicator">
-    <ion-card-content>
-      <ion-row>
-        <ion-col size="10">
-          <ion-text color="primary">
-            <h6>Busca ativa - {{ habitos.length }} resultado(s)</h6>
-          </ion-text>
-        </ion-col>
-        <ion-col size="2">
-          <ion-button fill="clear" size="small" (click)="resetSearch()">
-            <ion-icon name="close"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
+  @if (isSearchActive) {
+    <ion-card class="search-indicator">
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="10">
+            <ion-text color="primary">
+              <h6>Busca ativa - {{ habitos.length }} resultado(s)</h6>
+            </ion-text>
+          </ion-col>
+          <ion-col size="2">
+            <ion-button fill="clear" size="small" (click)="resetSearch()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  }
 
   <ion-grid>
     <ion-row>
       <ion-col size="12">
-          <ion-card *ngFor="let habito of habitos" class="habit-card" [style.border-left-color]="habito.categoria?.cor || '#7b1fa2'">
+        @for (habito of habitos; track habito.id) {
+          <ion-card class="habit-card" [style.border-left-color]="habito.categoria?.cor || '#7b1fa2'">
             <ion-card-header>
               <ion-card-subtitle>
                 <ion-badge [color]="getStatusColor(habito.status)" class="status-badge">
@@ -31,9 +34,11 @@
                 <ion-text color="medium" class="frequency-text">
                   {{ habito.frequencia }}
                 </ion-text>
-                <ion-badge *ngIf="habito.categoria" [style.background-color]="habito.categoria.cor" class="categoria-badge">
-                  {{ habito.categoria.nome }}
-                </ion-badge>
+                @if (habito.categoria) {
+                  <ion-badge [style.background-color]="habito.categoria.cor" class="categoria-badge">
+                    {{ habito.categoria.nome }}
+                  </ion-badge>
+                }
               </ion-card-subtitle>
               <ion-card-title>{{ habito.nome }}</ion-card-title>
             </ion-card-header>
@@ -59,14 +64,17 @@
               </ion-buttons>
             </ion-item>
           </ion-card>
-          
-          <ion-card *ngIf="habitos.length === 0">
+        }
+        
+        @if (habitos.length === 0) {
+          <ion-card>
             <ion-card-content class="nao-encontrado">
               <p class="ion-text-center">
                 {{ isSearchActive ? 'Nenhum hábito encontrado com os filtros aplicados.' : 'Nenhum hábito encontrado.' }}
               </p>
             </ion-card-content>
           </ion-card>
+        }
       </ion-col>
     </ion-row>
   </ion-grid>
